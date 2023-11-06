@@ -18,11 +18,22 @@ namespace FoundryCalculation
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StartPage : Window
     {
-        public MainWindow()
+        public StartPage()
         {
             InitializeComponent();
+        }
+
+        private void CreateFile(object sender, RoutedEventArgs e)
+        {
+            FormCalculation Window = new FormCalculation();
+            Window.Show();
+        }
+
+        private void OpenData(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
