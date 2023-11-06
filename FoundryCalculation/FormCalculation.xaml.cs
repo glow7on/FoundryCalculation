@@ -22,28 +22,41 @@ namespace FoundryCalculation
         public FormCalculation()
         {
             InitializeComponent();
-            AlloySelection.ItemsSource = new AluminiumAlloys[]
-            {
-                new AluminiumAlloys(909, 763, 1244, 2200, 83, 15071.64, 0.0000303, 6, 0.86, 865.2) {name = "АЛ1"},
-                new AluminiumAlloys() {name = "АК12 (АЛ2)"},
-                new AluminiumAlloys() {name = "АЛ3 (АК5М2Мг)"},
-                new AluminiumAlloys() {name = "АК9ч (АЛ4)"},
-                new AluminiumAlloys() {name = "АЛ6"},
-                new AluminiumAlloys() {name = "АЛ7"},
-                new AluminiumAlloys() {name = "АЛ8"},
-                new AluminiumAlloys() {name = "АК7ч (АЛ9)"},
-                new AluminiumAlloys() {name = "АЛ10"},
-                new AluminiumAlloys() {name = "АК7Ц9 (АЛ11)"},
-                new AluminiumAlloys() {name = "АЛ12"},
-                new AluminiumAlloys() {name = "АМг5К (АЛ13)"},
-                new AluminiumAlloys() {name = "АЛ18"},
-                new AluminiumAlloys() {name = "АМ5 (АЛ19)"},
-                new AluminiumAlloys() {name = "АМг11 (АЛ22)"}
+            Alloys[] aluminiumAlloys = new Alloys[] {
+                new Alloys(909, 763, 1244, 2200, 83, 15071.64, 0.0000303, 6, 0.86, 865.2) {name = "АЛ1"},
+                //new Alloys() {name = "АК12 (АЛ2)"},
+                //new Alloys() {name = "АЛ3 (АК5М2Мг)"},
+                //new Alloys() {name = "АК9ч (АЛ4)"},
+                //new Alloys() {name = "АЛ6"},
+                //new Alloys() {name = "АЛ7"},
+                //new Alloys() {name = "АЛ8"},
+                //new Alloys() {name = "АК7ч (АЛ9)"},
+                //new Alloys() {name = "АЛ10"},
+                //new Alloys() {name = "АК7Ц9 (АЛ11)"},
+                //new Alloys() {name = "АЛ12"},
+                //new Alloys() {name = "АМг5К (АЛ13)"},
+                //new Alloys() {name = "АЛ18"},
+                //new Alloys() {name = "АМ5 (АЛ19)"},
+                //new Alloys() {name = "АМг11 (АЛ22)"}
             };
+            Alloys[] magnesiumAlloys = new Alloys[]
+            {
+                //new Alloys() {name = "Мл2"},
+                //new Alloys() {name = "Мл3"},
+                //new Alloys() {name = "Мл4"},
+                //new Alloys() {name = "Мл5"},
+                //new Alloys() {name = "Мл6"},
+                //new Alloys() {name = "Мл10"},
+                //new Alloys() {name = "Мл11"},
+                //new Alloys() {name = "Мл12"},
+                //new Alloys() {name = "Мл15"}
+            };
+
+            AlloySelection.ItemsSource = aluminiumAlloys;
         }
     }
 
-    public class AluminiumAlloys
+    public class Alloys
     {
         public string name;
         public int liquidusTemperature; //Температура ликвидус Тл, К
@@ -56,9 +69,9 @@ namespace FoundryCalculation
         public int kineticViscosity; //Кинетическая вязкость v, 10^-7 * м^2/с
         public double surfaceTension; //Поверхностное натяжение σ, H/м
         public double flowStopTemperature; //Температура остановки потока Т0, К
-        public override string ToString() => $"{name};";
+        public override string ToString() => $"{name}";
 
-        public AluminiumAlloys(int liquidusTemperature, int solidusTemperature, int heatCapacity, int liquidMeltDensity,
+        public Alloys(int liquidusTemperature, int solidusTemperature, int heatCapacity, int liquidMeltDensity,
             int heatOutput, double heatStorageCapacity, double thermalConductivity, int kineticViscosity,
             double surfaceTension, double flowStopTemperature)
         {

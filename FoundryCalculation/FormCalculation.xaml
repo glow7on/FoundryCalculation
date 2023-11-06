@@ -8,7 +8,7 @@
         WindowState="Maximized"
         Title="Window1" Height="450" Width="800">
     <Grid Background="#FF202020" Margin="0,9,0,-9">
-        <Grid Margin="49,41,423,217" Background="#FF2B2B2B">
+        <Grid Margin="38,49,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="328" Height="176" VerticalAlignment="Top">
             <TextBox HorizontalAlignment="Left" Margin="212,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
             <TextBox HorizontalAlignment="Left" Margin="212,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
             <TextBox HorizontalAlignment="Left" Margin="212,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
@@ -25,7 +25,7 @@
     <LineBreak/>
     5. Напор расплава
             </TextBlock>
+            <ComboBox x:Name="AlloySelection" HorizontalAlignment="Left" Margin="212,127,0,0" VerticalAlignment="Top" Width="106"/>
         </Grid>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=20}" Margin="421,217,67,84"/>
     </Grid>
 </Window>
