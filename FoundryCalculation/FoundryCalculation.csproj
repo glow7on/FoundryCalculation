@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data.cs" />
     <Compile Include="FormCalculation.xaml.cs">
       <DependentUpon>FormCalculation.xaml</DependentUpon>
     </Compile>
@@ -104,6 +105,32 @@
   <ItemGroup>
     <Resource Include="Resources\LoadFile.png" />
     <Resource Include="Resources\NewFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Боковой подвод с 2 сторон.png" />
+    <Resource Include="Resources\Боковой подвод.png" />
+    <Resource Include="Resources\Вертикально-щелевой.png" />
+    <Resource Include="Resources\Сифонный подвод с 2 сторон.png" />
+    <Resource Include="Resources\Сифонный подвод.png" />
+    <Resource Include="Resources\Ярусный подвод с 2 сторон.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Боковой подвод.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Боковой подвод с 2 сторон.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Сифонный подвод.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Сифонный подвод с 2 сторон.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ярусный подвод с 2 сторон.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Вертикально-щелевой.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

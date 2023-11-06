@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FoundryCalculation"
         mc:Ignorable="d"
-        Title="Расчёт литниковых форм"
+        Title="Начальное окно"
         Height="450" Width="700" Background="#FF1E1E1E">
     <Grid Background="#FF202020">
         <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="82,84,421,83" Click="CreateFile" FontSize="24" Foreground="White" Background="#FF424040">
