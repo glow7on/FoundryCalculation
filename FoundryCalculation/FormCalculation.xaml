@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FoundryCalculation"
         mc:Ignorable="d"
+        WindowState="Maximized"
         Title="Window1" Height="450" Width="800">
-    <Grid Background="#FF202020">
-
+    <Grid Background="#FF202020" Margin="0,9,0,-9">
+        <Grid Margin="49,41,423,217" Background="#FF2B2B2B">
+            <TextBox HorizontalAlignment="Left" Margin="212,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
+            <TextBox HorizontalAlignment="Left" Margin="212,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
+            <TextBox HorizontalAlignment="Left" Margin="212,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
+            <TextBox HorizontalAlignment="Left" Margin="212,81,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
+            <TextBox HorizontalAlignment="Left" Margin="212,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" LineHeight="23" VerticalAlignment="Top" Foreground="White">
+    1. Высота полости формы
+    <LineBreak/>
+    2. Ширина полости формы
+    <LineBreak/>
+    3. Толщина полости формы
+    <LineBreak/>
+    4. Длина полости формы
+    <LineBreak/>
+    5. Напор расплава
+            </TextBlock>
+        </Grid>
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=20}" Margin="421,217,67,84"/>
     </Grid>
 </Window>
