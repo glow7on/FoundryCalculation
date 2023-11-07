@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace FoundryCalculation
 {
@@ -19,6 +20,36 @@ namespace FoundryCalculation
     /// </summary>
     public partial class FormCalculation : Window
     {
+        int crossSectionalArea; //Площадь поперечного сечения
+        double reducedCastingSize; //Приведенный размер отливки
+        double fillingRateLimit; //Предельно допустимая скорость заполнения
+        double squareFirstToSecond; //Площадь поперечного сечения на участке 1-2
+        double speedInArrow; //Скорость течения в узком месте
+        double squareInArrow; //Площадь поперечного сечения в узком месте
+        double meltFlowRate; // Коэффициент расхода расплава
+        double calculationPlessure; //Расчетный напор
+        double meltHeatTransfer; //Теплоотдача расплава 
+        double meltFrontTemperature; //Температура фронта потока расплава T1-2 в узле 2.э
+        double nusseltCriterion; //Критерий Нуссельта
+        double pecleCriterion; //Критерий Пекле
+        double meltThermalConductivity; //Температуропроводность расплава 
+        double meltFlowFrontTemperature; //Температура фронта потока расплава
+        double flowStopTemperature; //Температура остановки потока расплава T0
+
+        //Для расчета исполняемых размеров вертикально-щелевой литниковой системы
+        double permissibleMeltFlowRate; //Допустимый расход расплава
+        double thicknessGap; //Толщина щели 
+        double spreadingAngle; //Угол растекания расплава
+        double transverseSpreadingRate; //скорость поперечного растекания расплава в полости литейной формы
+        double permissibleFlowHeight; //высоту потока расплава при допустимом расходе, м
+        double reducedSize; //приведенный размер растекающегося потока расплава
+        double spreadingMeltTransfer; //теплоотдача расплава при проточно-поперечном растекании,  Вт/(м2К)
+        double maxSpreadingLength; //максимальную длину растекания расплава, м
+        double expenseRatio; //Коэффициент расхода
+        double riserSquare; //Площадь стояка
+        double riserSize; //Размер стояка
+        double pitDiameter; //Диаметр колодца
+
         public FormCalculation()
         {
             InitializeComponent();
@@ -59,23 +90,23 @@ namespace FoundryCalculation
             //Состав смеси
             Mixture[] mixtures = new Mixture[]
             {
-                //new Mixture() {name = "Типовая смесь для алюминиевых и магниевых отливок"},
-                //new Mixture() {name = "Формовочная песчано-глинистая сухая с 10% глины"},
-                //new Mixture() {name = "Стержневая с 0,5 % сульфидной барды и 19% древесных опилок, сухая"},
-                //new Mixture() {name = "Хромомагнезитовая жидкостекольная с 6% жидкого стекла"},
-                //new Mixture() {name = "Кварцевый песок, сухой"}, 
-                //new Mixture() {name = "Кварцевый песок, влажный"}
+                new Mixture(293, 0.510, 1100, 1600, 950) {name = "Типовая смесь для алюминиевых и магниевых отливок"},
+                new Mixture(290, 1.28,  1080, 1650, 1600) {name = "Формовочная песчано-глинистая сухая с 10% глины"},//290-1790
+                new Mixture(290, 0.705, 1650, 1600, 1377) {name = "Стержневая с 0,5 % сульфидной барды и 19% древесных опилок, сухая"},//290-1570
+                new Mixture(290, 2.560, 1980, 2700, 3700) {name = "Хромомагнезитовая жидкостекольная с 6% жидкого стекла"},//290-1850
+                new Mixture(290, 0.326, 795,  1500, 620) {name = "Кварцевый песок, сухой"},
+                new Mixture(290, 1.130, 2100, 1650, 1970) {name = "Кварцевый песок, влажный"}
             };
 
-            Coverage[] coverages = new Coverage[] 
+            Coverage[] coverages = new Coverage[]
             {
-                //new Coverage() {name = "Графит"},
-                //new Coverage() {name = "Тальк"},
-                //new Coverage() {name = "Гипс"},
-                //new Coverage() {name = "Мел"},
-                //new Coverage() {name = "Маршалит"},
-                //new Coverage() {name = "Прокаленный тальк"},
-                //new Coverage() {name = "Сажа"}
+                new Coverage(0.4) {name = "Графит"},
+                new Coverage(0.207) {name = "Тальк"},
+                new Coverage(0.29) {name = "Гипс"},
+                new Coverage(0.174) {name = "Мел"},
+                new Coverage(0.17) {name = "Маршалит"},
+                new Coverage(0.41) {name = "Прокаленный тальк"},
+                new Coverage(0.09) {name = "Сажа"}
             };
 
 
@@ -85,3 +116,4 @@ namespace FoundryCalculation
         }
     }
 }
+
