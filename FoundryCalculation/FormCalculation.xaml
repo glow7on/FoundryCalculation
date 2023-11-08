@@ -39,32 +39,32 @@
             <Label Content="Выбор схемы подвода" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="138" Foreground="White"/>
             <Button HorizontalAlignment="Left" Margin="23,39,0,0" VerticalAlignment="Top" Height="65" Width="65">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Боковой подвод.png"/>
+                    <ImageBrush ImageSource="Resources/Боковой подвод.png"/>
                 </Button.Background>
             </Button>
             <Button HorizontalAlignment="Center" Margin="0,39,0,0" VerticalAlignment="Top" Height="65" Width="66">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Боковой подвод с 2 сторон.png"/>
+                    <ImageBrush ImageSource="Resources/Боковой подвод с 2 сторон.png"/>
                 </Button.Background>
             </Button>
             <Button Margin="260,39,20,0" VerticalAlignment="Top" Height="65">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Сифонный подвод.png"/>
+                    <ImageBrush ImageSource="Resources/Сифонный подвод.png"/>
                 </Button.Background>
             </Button>
             <Button HorizontalAlignment="Left" Margin="23,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Сифонный подвод с 2 сторон.png"/>
+                    <ImageBrush ImageSource="Resources/Сифонный подвод с 2 сторон.png"/>
                 </Button.Background>
             </Button>
             <Button HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Ярусный подвод с 2 сторон.png"/>
+                    <ImageBrush ImageSource="Resources/Ярусный подвод с 2 сторон.png"/>
                 </Button.Background>
             </Button>
             <Button HorizontalAlignment="Left" Margin="261,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Вертикально-щелевой.png"/>
+                    <ImageBrush ImageSource="Resources/Вертикально-щелевой.png"/>
                 </Button.Background>
             </Button>
         </Grid>
