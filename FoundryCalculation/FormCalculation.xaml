@@ -68,5 +68,8 @@
                 </Button.Background>
             </Button>
         </Grid>
+        <Grid Margin="424,38,30,138" Background="#FF2B2B2B">
+            <Label x:Name="ExampleLabel" Content="Example: " HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        </Grid>
     </Grid>
 </Window>
