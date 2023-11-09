@@ -69,7 +69,36 @@
             </Button>
         </Grid>
         <Grid Margin="424,38,30,138" Background="#FF2B2B2B">
-            <Label x:Name="ExampleLabel" Content="Example: " HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="crossSectionalArea" Content="Площадь поперечного сечения: " HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="reducedCastingSize" Content="Приведенный размер отливки: " HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="fillingRateLimit" Content="Предельно допустимая скорость заполнения:" HorizontalAlignment="Left" Margin="278,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="squareFirstToSecond" Content="Площадь поперечного сечения на участке 1-2: " HorizontalAlignment="Left" Margin="15,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="speedInArrow" Content="Скорость течения в узком месте: " HorizontalAlignment="Left" Margin="161,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="squareInArrow" Content="Площадь поперечного сечения в узком месте: " HorizontalAlignment="Left" Margin="273,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="meltFlowRate" Content="Коэффициент расхода расплава: " HorizontalAlignment="Left" Margin="15,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="calculationPlessure" Content="Расчетный напор: " HorizontalAlignment="Left" Margin="121,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="meltHeatTransfer" Content="Теплоотдача расплава: " HorizontalAlignment="Left" Margin="185,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="meltFrontTemperature" Content="Температура фронта потока расплава T1-2 в узле 2.э: " HorizontalAlignment="Left" Margin="263,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="nusseltCriterion" Content="Критерий Нуссельта: " HorizontalAlignment="Left" Margin="15,64,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="pecleCriterion" Content="Критерий Пекле: " HorizontalAlignment="Left" Margin="93,64,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="meltThermalConductivity" Content="Температуропроводность расплава : " HorizontalAlignment="Left" Margin="153,64,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="meltFlowFrontTemperature" Content="Температура фронта потока расплава: " HorizontalAlignment="Left" Margin="271,64,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="flowStopTemperature" Content="Температура остановки потока расплава T0: " HorizontalAlignment="Left" Margin="15,82,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="permissibleMeltFlowRate" Content="Допустимый расход расплава: " HorizontalAlignment="Left" Margin="15,100,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="thicknessGap" Content="Толщина щели: " HorizontalAlignment="Left" Margin="114,100,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="spreadingAngle" Content="Угол растекания расплава: " HorizontalAlignment="Left" Margin="170,100,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="transverseSpreadingRate" Content="Cкорость поперечного растекания расплава в полости литейной формы: " HorizontalAlignment="Left" Margin="15,118,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="permissibleFlowHeight" Content="Высоту потока расплава при допустимом расходе, м: " HorizontalAlignment="Left" Margin="234,118,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="reducedSize" Content="Приведенный размер растекающегося потока расплава: " HorizontalAlignment="Left" Margin="15,136,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="spreadingMeltTransfer" Content="Теплоотдача расплава при проточно-поперечном растекании,  Вт/(м2К): " HorizontalAlignment="Left" Margin="188,136,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="maxSpreadingLength" Content="Максимальную длину растекания расплава, м: " HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Foreground="White" FontSize="6"/>
+            <Label x:Name="expenseRatio" Content="Коэффициент расхода: " HorizontalAlignment="Left" Margin="161,0,0,0" VerticalAlignment="Center" Foreground="White" FontSize="6"/>
+            <Label x:Name="riserSquare" Content="Площадь стояка: " HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Center" Foreground="White" FontSize="6"/>
+            <Label x:Name="riserSize" Content="Размер стояка: " HorizontalAlignment="Left" Margin="15,169,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="pitDiameter" Content="Диаметр колодца: " HorizontalAlignment="Left" Margin="67,169,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="ExampleLabel_Copy26" Content="Example: " HorizontalAlignment="Left" Margin="185,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="ExampleLabel_Copy27" Content="Example: " HorizontalAlignment="Left" Margin="245,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="ExampleLabel_Copy28" Content="Example: " HorizontalAlignment="Left" Margin="305,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
         </Grid>
     </Grid>
 </Window>
