@@ -48,7 +48,7 @@ namespace FoundryCalculation
         public double thermalConductivity; //Теплопровод-ность формы λф, Вт/м·К
         public int heatCapacity; //Теплоемкость сф, Дж/кг·К
         public int dencity; //Плотность ρф, кг/м3
-        public int heatStorageCapacity;//Теплоаккуму-лирующая способность bф, Вт·с1/2/(м2·К)
+        public int heatStorageCapacity;//Теплоаккумулирующая способность bф, Вт·с1/2/(м2·К)
         public Mixture(int initialTemperature, double thermalConductivity, int heatCapacity, int dencity, int heatStorageCapacity)
         {
             this.initialTemperature = initialTemperature;
@@ -69,6 +69,13 @@ namespace FoundryCalculation
         {
             this.thermalConductivity = thermalConductivity;
         }
+        public override string ToString() => $"{name}";
+    }
+
+    public class Complexity
+    {
+        public string name;
+        public Complexity() { }
         public override string ToString() => $"{name}";
     }
 }

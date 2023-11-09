@@ -20,6 +20,21 @@ namespace FoundryCalculation
     /// </summary>
     public partial class FormCalculation : Window
     {
+        const int millimetersInMeters = 100;
+
+        //Входные данные (вводимые вручную)
+        int formHeight; //Высота формы h0
+        int formWidth; //Ширина формы b
+        int formThick; //Толщина формы 
+        int formLength; //Длина формы l
+        int meltPressure; //Напор расплава Н
+        List<Alloys> aluminiumAlloys = new List<Alloys>();
+        List<Alloys> magneumAlloys = new List<Alloys>();
+        List<Mixture> mixtures = new List<Mixture>();
+        List<Coverage> coverages = new List<Coverage>();
+
+        //Общие выходные данные ??
+        int pathLength; //Длина пути участка
         int crossSectionalArea; //Площадь поперечного сечения
         double reducedCastingSize; //Приведенный размер отливки
         double fillingRateLimit; //Предельно допустимая скорость заполнения
@@ -55,7 +70,7 @@ namespace FoundryCalculation
             InitializeComponent();
 
             //Алюминиевый сплав
-            Alloys[] aluminiumAlloys = new Alloys[] {
+            Alloys[] aluminium = new Alloys[] {
                new Alloys(909, 763, 1244, 2200, 83, 15071.64, 0.0000303, 6, 0.86, 865.2) {name = "АЛ1"},
                new Alloys(864, 850, 1286, 2200, 83, 15323.96, 0.0000293, 6, 0.86, 859.8) {name = "АК12 (АЛ2)"},
                new Alloys(888, 821, 1194, 2200, 83, 14765.65, 0.0000316, 6, 0.86, 867.9) {name = "АЛ3 (АК5М2Мг)"},
@@ -74,7 +89,7 @@ namespace FoundryCalculation
             };
 
             //Магниевый сплав
-            Alloys[] magnesiumAlloys = new Alloys[]
+            Alloys[] magnesium = new Alloys[]
             {
                 new Alloys(923, 918, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 921.5) {name = "Мл2"},
                 new Alloys(901, 834, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 880.9) {name = "Мл3"},
@@ -88,7 +103,7 @@ namespace FoundryCalculation
             };
 
             //Состав смеси
-            Mixture[] mixtures = new Mixture[]
+            Mixture[] mixture = new Mixture[]
             {
                 new Mixture(293, 0.510, 1100, 1600, 950) {name = "Типовая смесь для алюминиевых и магниевых отливок"},
                 new Mixture(290, 1.28,  1080, 1650, 1600) {name = "Формовочная песчано-глинистая сухая с 10% глины"},//290-1790
@@ -97,8 +112,8 @@ namespace FoundryCalculation
                 new Mixture(290, 0.326, 795,  1500, 620) {name = "Кварцевый песок, сухой"},
                 new Mixture(290, 1.130, 2100, 1650, 1970) {name = "Кварцевый песок, влажный"}
             };
-
-            Coverage[] coverages = new Coverage[]
+            //Покрытие
+            Coverage[] coverage = new Coverage[]
             {
                 new Coverage(0.4) {name = "Графит"},
                 new Coverage(0.207) {name = "Тальк"},
@@ -107,13 +122,76 @@ namespace FoundryCalculation
                 new Coverage(0.17) {name = "Маршалит"},
                 new Coverage(0.41) {name = "Прокаленный тальк"},
                 new Coverage(0.09) {name = "Сажа"}
-            };
-
+            };       
+            
+            aluminiumAlloys.AddRange(aluminium);
+            magneumAlloys.AddRange(magnesium);
+            mixtures.AddRange(mixture);
+            coverages.AddRange(coverage);
 
             AlloySelection.ItemsSource = aluminiumAlloys;
             MixtureSelection.ItemsSource = mixtures;
             CoverageSelection.ItemsSource = coverages;
+
         }
+
+        void StartCalculation(object sender, RoutedEventArgs e)
+        {
+            if (RefreshInputData())
+            {
+                SquareSectionsCalculation();
+                pathLength = formLength;
+                ReducedCastingSizeCalculation();
+            }
+        }
+
+        bool RefreshInputData()
+        {
+            bool check = true;
+            try
+            {
+                formHeight = Int32.Parse(formHeightBox.Text);
+                formWidth = Int32.Parse(formWidthBox.Text);
+                formThick = Int32.Parse(formThickBox.Text);
+                formLength = Int32.Parse(formLengthBox.Text);
+                meltPressure = Int32.Parse(meltPressureBox.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка входных данных");
+                check = false;
+            }
+            return check;
+        }
+
+
+        private void SwitchToAluminium(object sender, RoutedEventArgs e)
+        {
+            AlloySelection.ItemsSource = aluminiumAlloys;
+        }
+
+        private void SwitchToMagnium(object sender, RoutedEventArgs e)
+        {
+            AlloySelection.ItemsSource = magneumAlloys;
+        }
+
+        //void fillingRateLimitCalculation()
+        //{
+        //    fillingRateLimit = ();
+        //}
+        
+        void SquareSectionsCalculation() 
+        {
+            squareFirstToSecond = (formWidth/ millimetersInMeters) * (formThick/ millimetersInMeters);
+            squareFirstToSecondLabel.Content = "Площадь поперечного сечения на участке 1 - 2: "  + squareFirstToSecond;
+        }
+
+        void ReducedCastingSizeCalculation()
+        {
+            reducedCastingSize = (formThick/millimetersInMeters)/2;
+            reducedCastingSizeLabel.Content = "Приведенный размер отливки: " + reducedCastingSize;
+        }
+
     }
 }
 
