@@ -88,17 +88,13 @@ namespace FoundryCalculation
         public string type; //Тип литниковой системы: Вертикально-щелевая, Сифонная, Боковая
 
         //Критерии шлакообразования для: простой, средней и тяжелой полости формы соответственно
-        public int slugFormationSimple;
-        public int slugFormationMiddle;
-        public int slugFormationHard;
+        public int[] criteriaValues = new int[3];
         private Uri uri;
         public BitmapImage bitmapImage;
 
         public MeltSupplyScheme(string type, int[] criteriaValues, string path) 
         {
-            slugFormationSimple = criteriaValues[0];
-            slugFormationMiddle = criteriaValues[1];
-            slugFormationHard = criteriaValues[2];
+            this.criteriaValues = criteriaValues;
             uri = new Uri(path);
             bitmapImage = new BitmapImage(uri);
         }

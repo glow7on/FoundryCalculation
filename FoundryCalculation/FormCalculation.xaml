@@ -40,8 +40,8 @@
             <ComboBox x:Name="CoverageSelection" HorizontalAlignment="Left" Margin="234,192,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
             <ComboBox x:Name="meltSupplySchemesSelection" HorizontalAlignment="Left" Margin="234,217,0,0" VerticalAlignment="Top" Width="107" Height="22" SelectionChanged="MeltSupplySchemeChange"/>
             <ComboBox x:Name="ComplexitySelection" HorizontalAlignment="Left" Margin="234,243,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
-            <RadioButton Content="Алюминий" IsChecked="True" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToAluminium"/>
-            <RadioButton Content="Магний" HorizontalAlignment="Left" Margin="140,149,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToMagnium"/>
+            <RadioButton x:Name="AluminiumRadioBtn" Content="Алюминий" IsChecked="True" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToAluminium"/>
+            <RadioButton x:Name="MagniumRadioBtn" Content="Магний" HorizontalAlignment="Left" Margin="140,149,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToMagnium"/>
         </Grid>
         <Grid Margin="38,336,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="359" Height="201" VerticalAlignment="Top">
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
