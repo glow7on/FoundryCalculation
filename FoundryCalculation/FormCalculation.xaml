@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:FoundryCalculation"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="Расчет формы" Height="570" Width="883">
-    <Grid Background="#FF202020" Margin="0,0,0,-58">
-        <Grid Margin="38,38,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="346" Height="259" VerticalAlignment="Top">
-            <TextBox x:Name="formHeightBox" HorizontalAlignment="Left" Margin="221,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
-            <TextBox x:Name="formWidthBox" HorizontalAlignment="Left" Margin="221,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
-            <TextBox x:Name="formThickBox" HorizontalAlignment="Left" Margin="221,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
-            <TextBox x:Name="formLengthBox" HorizontalAlignment="Left" Margin="221,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
-            <TextBox x:Name="meltPressureBox" HorizontalAlignment="Left" Margin="221,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+        Title="Расчет формы" Height="615" Width="883">
+    <Grid Background="#FF202020" Margin="0,0,0,-6">
+        <Grid Margin="38,38,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="359" Height="284" VerticalAlignment="Top">
+            <TextBox x:Name="formHeightBox" HorizontalAlignment="Left" Margin="234,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+            <TextBox x:Name="formWidthBox" HorizontalAlignment="Left" Margin="234,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+            <TextBox x:Name="formThickBox" HorizontalAlignment="Left" Margin="234,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+            <TextBox x:Name="formLengthBox" HorizontalAlignment="Left" Margin="234,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+            <TextBox x:Name="meltPressureBox" HorizontalAlignment="Left" Margin="234,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" LineHeight="26" VerticalAlignment="Top" Foreground="White">
                 1. Высота полости формы (мм)
 <LineBreak/>
@@ -31,53 +31,26 @@
                 <LineBreak/>
                 8. Выбор материала покрытия
                 <LineBreak/>
-                9. Выбор сложности полости формы
+                9. Выбор схемы подвода
+                <LineBreak/>
+            10. Выбор конфигурации формы
             </TextBlock>
-            <ComboBox x:Name="AlloySelection" HorizontalAlignment="Left" Margin="221,140,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
-            <ComboBox x:Name="MixtureSelection" HorizontalAlignment="Left" Margin="221,166,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
-            <ComboBox x:Name="CoverageSelection" HorizontalAlignment="Left" Margin="221,192,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
-            <ComboBox x:Name="ComplexitySelection" HorizontalAlignment="Left" Margin="221,218,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
+            <ComboBox x:Name="AlloySelection" HorizontalAlignment="Left" Margin="234,140,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
+            <ComboBox x:Name="MixtureSelection" HorizontalAlignment="Left" Margin="234,166,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
+            <ComboBox x:Name="CoverageSelection" HorizontalAlignment="Left" Margin="234,192,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
+            <ComboBox x:Name="meltSupplySchemesSelection" HorizontalAlignment="Left" Margin="234,217,0,0" VerticalAlignment="Top" Width="107" Height="22" SelectionChanged="MeltSupplySchemeChange"/>
+            <ComboBox x:Name="ComplexitySelection" HorizontalAlignment="Left" Margin="234,243,0,0" VerticalAlignment="Top" Width="107" Height="22"/>
             <RadioButton Content="Алюминий" IsChecked="True" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToAluminium"/>
-            <RadioButton Content="Магний" HorizontalAlignment="Left" Margin="133,149,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToMagnium"/>
+            <RadioButton Content="Магний" HorizontalAlignment="Left" Margin="140,149,0,0" VerticalAlignment="Top" Foreground="White" Checked="SwitchToMagnium"/>
         </Grid>
-        <Grid Margin="38,316,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="346" Height="201" VerticalAlignment="Top">
-            <Label Content="Выбор схемы подвода" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="138" Foreground="White"/>
-            <Button HorizontalAlignment="Left" Margin="23,39,0,0" VerticalAlignment="Top" Height="65" Width="65">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Боковой подвод.png"/>
-                </Button.Background>
-            </Button>
-            <Button HorizontalAlignment="Center" Margin="0,39,0,0" VerticalAlignment="Top" Height="65" Width="66">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Боковой подвод с 2 сторон.png"/>
-                </Button.Background>
-            </Button>
-            <Button Margin="260,39,20,0" VerticalAlignment="Top" Height="65">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Сифонный подвод.png"/>
-                </Button.Background>
-            </Button>
-            <Button HorizontalAlignment="Left" Margin="23,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Сифонный подвод с 2 сторон.png"/>
-                </Button.Background>
-            </Button>
-            <Button HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Ярусный подвод с 2 сторон.png"/>
-                </Button.Background>
-            </Button>
-            <Button HorizontalAlignment="Left" Margin="261,126,0,0" VerticalAlignment="Top" Height="65" Width="65">
-                <Button.Background>
-                    <ImageBrush ImageSource="Resources/Вертикально-щелевой.png"/>
-                </Button.Background>
-            </Button>
+        <Grid Margin="38,336,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="359" Height="201" VerticalAlignment="Top">
+            <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
         <Grid Margin="424,38,30,138" Background="#FF2B2B2B">
             <Label x:Name="crossSectionalAreaLabel" Content="Площадь поперечного сечения: " HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <Label x:Name="reducedCastingSizeLabel" Content="Приведенный размер отливки: " HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="reducedCastingSizeLabel" Content="Приведенный размер отливки: " HorizontalAlignment="Left" Margin="10,274,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="fillingRateLimitLabel" Content="Предельно допустимая скорость заполнения:" HorizontalAlignment="Left" Margin="278,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
-            <Label x:Name="squareFirstToSecondLabel" Content="Площадь поперечного сечения на участке 1-2: " HorizontalAlignment="Left" Margin="8,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="squareFirstToSecondLabel" Content="Площадь поперечного сечения на участке 1-2: " HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="speedInArrowLabel" Content="Скорость течения в узком месте: " HorizontalAlignment="Left" Margin="161,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
             <Label x:Name="squareInArrowLabel" Content="Площадь поперечного сечения в узком месте: " HorizontalAlignment="Left" Margin="273,28,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
             <Label x:Name="meltFlowRateLabel" Content="Коэффициент расхода расплава: " HorizontalAlignment="Left" Margin="15,46,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
@@ -101,10 +74,9 @@
             <Label x:Name="riserSquareLabel" Content="Площадь стояка: " HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Center" Foreground="White" FontSize="6"/>
             <Label x:Name="riserSizeLabel" Content="Размер стояка: " HorizontalAlignment="Left" Margin="15,169,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
             <Label x:Name="pitDiameterLabel" Content="Диаметр колодца: " HorizontalAlignment="Left" Margin="67,169,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
-            <Label x:Name="ExampleLabel_Copy26" Content="Example: " HorizontalAlignment="Left" Margin="185,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
-            <Label x:Name="ExampleLabel_Copy27" Content="Example: " HorizontalAlignment="Left" Margin="245,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
-            <Label x:Name="ExampleLabel_Copy28" Content="Example: " HorizontalAlignment="Left" Margin="305,284,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
+            <Label x:Name="ExampleLabel_Copy28" Content="Example: " HorizontalAlignment="Left" Margin="346,183,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
         </Grid>
-        <Button Content="Применить изменения" HorizontalAlignment="Left" Margin="38,531,0,0" VerticalAlignment="Top" Height="46" Width="346" Background="#FF2B2B2B" Foreground="White" Click="StartCalculation"/>
+        <Button Content="Применить изменения" HorizontalAlignment="Left" Margin="38,545,0,0" VerticalAlignment="Top" Height="46" Width="359" Background="#FF2B2B2B" Foreground="White" Click="StartCalculation"/>
+        <Image x:Name="SupplySchemeImage" Source="/Resources/Side.png" HorizontalAlignment="Left" Height="154" Margin="47,373,0,0" VerticalAlignment="Top" Width="336"/>
     </Grid>
 </Window>

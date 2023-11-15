@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Collections.Specialized.BitVector32;
+using System.Xml.Linq;
 
 namespace FoundryCalculation
 {
@@ -20,7 +20,9 @@ namespace FoundryCalculation
     /// </summary>
     public partial class FormCalculation : Window
     {
+        const double oxideFoam = 0.000005; //Толщина оксидной пены
         const int millimetersInMeters = 100;
+        string path;
 
         //Входные данные (вводимые вручную)
         int formHeight; //Высота формы h0
@@ -29,9 +31,16 @@ namespace FoundryCalculation
         int formLength; //Длина формы l
         int meltPressure; //Напор расплава Н
         List<Alloys> aluminiumAlloys = new List<Alloys>();
-        List<Alloys> magneumAlloys = new List<Alloys>();
+        List<Alloys> magniumAlloys = new List<Alloys>();
         List<Mixture> mixtures = new List<Mixture>();
         List<Coverage> coverages = new List<Coverage>();
+        List<MeltSupplyScheme> meltSupplySchemes = new List<MeltSupplyScheme>();
+
+        //Выбираемые через "ComboBox" элементы
+        Alloys currentAlloys;
+        Mixture currentMixture;
+        Coverage currentCoverage;
+        MeltSupplyScheme currentMeltSupplyScheme;
 
         //Общие выходные данные ??
         int pathLength; //Длина пути участка
@@ -47,6 +56,7 @@ namespace FoundryCalculation
         double meltFrontTemperature; //Температура фронта потока расплава T1-2 в узле 2.э
         double nusseltCriterion; //Критерий Нуссельта
         double pecleCriterion; //Критерий Пекле
+        double slugFormationCriteria; //Критерий шлакообразования
         double meltThermalConductivity; //Температуропроводность расплава 
         double meltFlowFrontTemperature; //Температура фронта потока расплава
         double flowStopTemperature; //Температура остановки потока расплава T0
@@ -68,9 +78,15 @@ namespace FoundryCalculation
         public FormCalculation()
         {
             InitializeComponent();
+            //Табличные значения критерия шлакообразования для различных конфигураций по типу литниковой системы: простой, средней и сложной соответственно
+            int[] verticallySlottedArray = new int[] { 150000, 18500, 6500 };
+            int[] siphonArray = new int[] { 75000, 9000, 3100 };
+            int[] sideArray = new int[] { 45000, 5500, 1800 };
+            BitmapImage bitmapImage = new BitmapImage();
+            this.path = @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png";
 
             //Алюминиевый сплав
-            Alloys[] aluminium = new Alloys[] {
+            Alloys[] aluminiumArray = new Alloys[] {
                new Alloys(909, 763, 1244, 2200, 83, 15071.64, 0.0000303, 6, 0.86, 865.2) {name = "АЛ1"},
                new Alloys(864, 850, 1286, 2200, 83, 15323.96, 0.0000293, 6, 0.86, 859.8) {name = "АК12 (АЛ2)"},
                new Alloys(888, 821, 1194, 2200, 83, 14765.65, 0.0000316, 6, 0.86, 867.9) {name = "АЛ3 (АК5М2Мг)"},
@@ -89,7 +105,7 @@ namespace FoundryCalculation
             };
 
             //Магниевый сплав
-            Alloys[] magnesium = new Alloys[]
+            Alloys[] magnesiumArray = new Alloys[]
             {
                 new Alloys(923, 918, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 921.5) {name = "Мл2"},
                 new Alloys(901, 834, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 880.9) {name = "Мл3"},
@@ -103,7 +119,7 @@ namespace FoundryCalculation
             };
 
             //Состав смеси
-            Mixture[] mixture = new Mixture[]
+            Mixture[] mixtureArray = new Mixture[]
             {
                 new Mixture(293, 0.510, 1100, 1600, 950) {name = "Типовая смесь для алюминиевых и магниевых отливок"},
                 new Mixture(290, 1.28,  1080, 1650, 1600) {name = "Формовочная песчано-глинистая сухая с 10% глины"},//290-1790
@@ -113,7 +129,7 @@ namespace FoundryCalculation
                 new Mixture(290, 1.130, 2100, 1650, 1970) {name = "Кварцевый песок, влажный"}
             };
             //Покрытие
-            Coverage[] coverage = new Coverage[]
+            Coverage[] coverageArray = new Coverage[]
             {
                 new Coverage(0.4) {name = "Графит"},
                 new Coverage(0.207) {name = "Тальк"},
@@ -122,26 +138,50 @@ namespace FoundryCalculation
                 new Coverage(0.17) {name = "Маршалит"},
                 new Coverage(0.41) {name = "Прокаленный тальк"},
                 new Coverage(0.09) {name = "Сажа"}
-            };       
-            
-            aluminiumAlloys.AddRange(aluminium);
-            magneumAlloys.AddRange(magnesium);
-            mixtures.AddRange(mixture);
-            coverages.AddRange(coverage);
+            };
+            //Литниковые системы
+            MeltSupplyScheme[] meltSuppliesArray = new MeltSupplyScheme[]
+            {
+                new MeltSupplyScheme("Боковая", sideArray, this.path) {name = "Боковой подвод"},
+                new MeltSupplyScheme("Боковая", sideArray, this.path) {name = "Боковой подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Сифонный подвод"},
+                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Сифонный подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Ярусный подвод с двух сторон"},
+                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, this.path) {name = "Вертикально-щелевой подвод"},
+                //@"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\Side.png\"
+                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png"
+                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\SiphonTwo.png"
+                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Tiered.png"
+                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\VerticallySlotted.png"
+            };
+            //Сложность конфмгурации формы
+            string[] ComplexityArray = new string[] { "Простая", "Средняя", "Сложная" };
+
+            aluminiumAlloys.AddRange(aluminiumArray);
+            magniumAlloys.AddRange(magnesiumArray);
+            mixtures.AddRange(mixtureArray);
+            coverages.AddRange(coverageArray);
+            meltSupplySchemes.AddRange(meltSuppliesArray);
 
             AlloySelection.ItemsSource = aluminiumAlloys;
             MixtureSelection.ItemsSource = mixtures;
             CoverageSelection.ItemsSource = coverages;
-
+            meltSupplySchemesSelection.ItemsSource = meltSupplySchemes;
+            ComplexitySelection.ItemsSource = ComplexityArray;
         }
 
         void StartCalculation(object sender, RoutedEventArgs e)
         {
             if (RefreshInputData())
             {
+                ChangeCurrentElements();
+
                 SquareSectionsCalculation();
                 pathLength = formLength;
                 ReducedCastingSizeCalculation();
+                slugFormationCriteriaCalculation();
+                fillingRateLimitCalculation();
+
             }
         }
 
@@ -161,7 +201,18 @@ namespace FoundryCalculation
                 MessageBox.Show("Ошибка входных данных");
                 check = false;
             }
+            if (AlloySelection.SelectedItem == null | MixtureSelection.SelectedItem == null | CoverageSelection.SelectedItem == null |
+                meltSupplySchemesSelection.SelectedItem == null | ComplexitySelection.SelectedItem == null) { check = false; }
             return check;
+        }
+
+        void ChangeCurrentElements()
+        {
+            if (AluminiumRadioBtn.IsChecked == true) { currentAlloys = aluminiumAlloys[AlloySelection.SelectedIndex]; }
+            else { currentAlloys = magniumAlloys[AlloySelection.SelectedIndex]; }
+            currentMixture = mixtures[MixtureSelection.SelectedIndex];
+            currentCoverage = coverages[CoverageSelection.SelectedIndex];
+            currentMeltSupplyScheme = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
         }
 
 
@@ -172,26 +223,37 @@ namespace FoundryCalculation
 
         private void SwitchToMagnium(object sender, RoutedEventArgs e)
         {
-            AlloySelection.ItemsSource = magneumAlloys;
+            AlloySelection.ItemsSource = magniumAlloys;
         }
 
-        //void fillingRateLimitCalculation()
-        //{
-        //    fillingRateLimit = ();
-        //}
-        
-        void SquareSectionsCalculation() 
+        void SquareSectionsCalculation()
         {
-            squareFirstToSecond = (formWidth/ millimetersInMeters) * (formThick/ millimetersInMeters);
-            squareFirstToSecondLabel.Content = "Площадь поперечного сечения на участке 1 - 2: "  + squareFirstToSecond;
+            squareFirstToSecond = (formWidth / millimetersInMeters) * (formThick / millimetersInMeters);
+            squareFirstToSecondLabel.Content = "Площадь поперечного сечения на участке 1-2: " + squareFirstToSecond;
         }
 
         void ReducedCastingSizeCalculation()
         {
-            reducedCastingSize = (formThick/millimetersInMeters)/2;
+            reducedCastingSize = (formThick / millimetersInMeters) / 2;
             reducedCastingSizeLabel.Content = "Приведенный размер отливки: " + reducedCastingSize;
         }
 
+        void slugFormationCriteriaCalculation() //Добавить вывод?
+        {
+            slugFormationCriteria = currentMeltSupplyScheme.criteriaValues[ComplexitySelection.SelectedIndex];
+        }
+
+        void fillingRateLimitCalculation() //Добавить вывод
+        {
+            fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension)/(currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
+        } 
+
+        private void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
+        {
+            MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
+            SupplySchemeImage.Source = selectedItem.bitmapImage;
+            SelectedSchemeLabel.Content = "Выбранная схема подвода: " + selectedItem.name;
+        }
     }
 }
 

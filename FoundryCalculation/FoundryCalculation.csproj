@@ -103,16 +103,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\LoadFile.png" />
-    <Resource Include="Resources\NewFile.png" />
+    <Content Include="Resources\LoadFile.png" />
+    <Content Include="Resources\NewFile.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Боковой подвод с 2 сторон.png" />
-    <Resource Include="Resources\Боковой подвод.png" />
-    <Resource Include="Resources\Вертикально-щелевой.png" />
-    <Resource Include="Resources\Сифонный подвод с 2 сторон.png" />
-    <Resource Include="Resources\Сифонный подвод.png" />
-    <Resource Include="Resources\Ярусный подвод с 2 сторон.png" />
+    <Resource Include="Resources\Side.png" />
+    <Resource Include="Resources\SideTwo.png" />
+    <Resource Include="Resources\Siphon.png" />
+    <Resource Include="Resources\SiphonTwo.png" />
+    <Resource Include="Resources\Tiered.png" />
+    <Resource Include="Resources\VerticallySlotted.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,7 +13,7 @@
             </Image>
         </Button>
         <Button x:Name="OpenDataButton" Margin="372,84,70,0" Click="OpenData" Background="#FF424040" Height="72" VerticalAlignment="Top">
-            <Image Source="/Resources/LoadFile.png" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="60" Margin="-110,0,0,0" Stretch="Fill">
+            <Image Source ="/Resources/LoadFile.png"  HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="60" Margin="-110,0,0,0" Stretch="Fill">
             </Image>
         </Button>
         <Button x:Name="AboutButton" Content="О программе" Margin="404,188,102,0" Background="#FF424040" FontSize="20" Foreground="White" FontFamily="Yu Gothic UI Light" Height="59" VerticalAlignment="Top"/>

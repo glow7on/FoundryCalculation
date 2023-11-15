@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace FoundryCalculation
 {
@@ -72,10 +73,35 @@ namespace FoundryCalculation
         public override string ToString() => $"{name}";
     }
 
+    //Сложность формы литниковой системы
     public class Complexity
     {
         public string name;
         public Complexity() { }
+        public override string ToString() => $"{name}";
+    }
+
+    //Литниковая система
+    public class MeltSupplyScheme
+    {
+        public string name;
+        public string type; //Тип литниковой системы: Вертикально-щелевая, Сифонная, Боковая
+
+        //Критерии шлакообразования для: простой, средней и тяжелой полости формы соответственно
+        public int slugFormationSimple;
+        public int slugFormationMiddle;
+        public int slugFormationHard;
+        private Uri uri;
+        public BitmapImage bitmapImage;
+
+        public MeltSupplyScheme(string type, int[] criteriaValues, string path) 
+        {
+            slugFormationSimple = criteriaValues[0];
+            slugFormationMiddle = criteriaValues[1];
+            slugFormationHard = criteriaValues[2];
+            uri = new Uri(path);
+            bitmapImage = new BitmapImage(uri);
+        }
         public override string ToString() => $"{name}";
     }
 }
