@@ -47,7 +47,7 @@
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
         <Grid Margin="424,38,30,138" Background="#FF2B2B2B">
-            <Label x:Name="crossSectionalAreaLabel" Content="Площадь поперечного сечения: " HorizontalAlignment="Left" Margin="0,-3,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="crossSectionalAreaLabel" Content="Площадь поперечного сечения: " HorizontalAlignment="Left" Margin="7,0,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="reducedCastingSizeLabel" Content="Приведенный размер отливки: " HorizontalAlignment="Left" Margin="10,274,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="fillingRateLimitLabel" Content="Предельно допустимая скорость заполнения:" HorizontalAlignment="Left" Margin="278,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="6"/>
             <Label x:Name="squareFirstToSecondLabel" Content="Площадь поперечного сечения на участке 1-2: " HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Foreground="White"/>

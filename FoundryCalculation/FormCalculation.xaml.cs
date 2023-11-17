@@ -142,17 +142,12 @@ namespace FoundryCalculation
             //Литниковые системы
             MeltSupplyScheme[] meltSuppliesArray = new MeltSupplyScheme[]
             {
-                new MeltSupplyScheme("Боковая", sideArray, this.path) {name = "Боковой подвод"},
-                new MeltSupplyScheme("Боковая", sideArray, this.path) {name = "Боковой подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Сифонный подвод"},
-                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Сифонный подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, this.path) {name = "Ярусный подвод с двух сторон"},
-                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, this.path) {name = "Вертикально-щелевой подвод"},
-                //@"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\Side.png\"
-                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png"
-                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\SiphonTwo.png"
-                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Tiered.png"
-                //@"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\VerticallySlotted.png"
+                new MeltSupplyScheme("Боковая", sideArray, @"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\Side.png") {name = "Боковой подвод"},
+                new MeltSupplyScheme("Боковая", sideArray, @"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\SideTwo.png") {name = "Боковой подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png") {name = "Сифонный подвод"},
+                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\SiphonTwo.png") {name = "Сифонный подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Tiered.png") {name = "Ярусный подвод с двух сторон"},
+                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
             };
             //Сложность конфмгурации формы
             string[] ComplexityArray = new string[] { "Простая", "Средняя", "Сложная" };
@@ -238,6 +233,7 @@ namespace FoundryCalculation
             reducedCastingSizeLabel.Content = "Приведенный размер отливки: " + reducedCastingSize;
         }
 
+
         void slugFormationCriteriaCalculation() //Добавить вывод?
         {
             slugFormationCriteria = currentMeltSupplyScheme.criteriaValues[ComplexitySelection.SelectedIndex];
@@ -248,7 +244,7 @@ namespace FoundryCalculation
             fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension)/(currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
         } 
 
-        private void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
+        void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
         {
             MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
             SupplySchemeImage.Source = selectedItem.bitmapImage;
