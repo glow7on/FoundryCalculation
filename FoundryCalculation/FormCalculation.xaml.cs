@@ -45,6 +45,7 @@ namespace FoundryCalculation
         //Общие выходные данные ??
         int pathLength; //Длина пути участка
         int crossSectionalArea; //Площадь поперечного сечения
+        double halfWallThickness; //Половина толщины стенки?
         double reducedCastingSize; //Приведенный размер отливки
         double fillingRateLimit; //Предельно допустимая скорость заполнения
         double squareFirstToSecond; //Площадь поперечного сечения на участке 1-2
@@ -241,14 +242,41 @@ namespace FoundryCalculation
 
         void fillingRateLimitCalculation() //Добавить вывод
         {
-            fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension)/(currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
-        } 
+            fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension) / (currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
+        }
 
         void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
         {
             MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
             SupplySchemeImage.Source = selectedItem.bitmapImage;
             SelectedSchemeLabel.Content = "Выбранная схема подвода: " + selectedItem.name;
+        }
+        void squareInArrowCalculation()//площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
+        {
+            squareInArrow = (squareFirstToSecond * fillingRateLimit) / speedInArrow;
+        }
+        void meltThermalConductivityCalculation()//Температуропроводность расплава (1.1.11)
+        {
+            meltThermalConductivity = currentAlloys.heatOutput / (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity);
+        }
+        void pecleCriterionCalculation()//критерий Пекле
+        {
+            pecleCriterion = (fillingRateLimit * halfWallThickness) / meltThermalConductivity;
+        }
+        void nusseltCriterionCalculation()//критерий Нуссельта
+        {
+            if (pecleCriterion < 50)
+            {
+                nusseltCriterion = 1;
+            }
+            else
+            {
+                nusseltCriterion = 0.33 * Math.Pow(pecleCriterion, 0.82);
+            }
+        }
+        void meltHeatTransferCaclculation()//Теплоотдача расплава 
+        {
+            meltHeatTransfer = (currentAlloys.heatOutput * nusseltCriterion) / halfWallThickness;
         }
     }
 }
