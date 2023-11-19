@@ -182,7 +182,6 @@ namespace FoundryCalculation
                 ChangeCurrentElements();
 
                 halfWallThickness = formThick / 2;
-
                 SquareSectionsCalculation();
                 pathLength = formLength;
                 ReducedCastingSizeCalculation();

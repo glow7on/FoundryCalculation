@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace FoundryCalculation
 {
     //Сплавы
-   public class Alloys
+    public class Alloys
     {
         public string name;
         public int liquidusTemperature; //Температура ликвидус Тл, К
@@ -91,12 +91,15 @@ namespace FoundryCalculation
         public int[] criteriaValues = new int[3];
         private Uri uri;
         public BitmapImage bitmapImage;
+        public double flowCoefficient;
 
-        public MeltSupplyScheme(string type, int[] criteriaValues, string path) 
+        public MeltSupplyScheme(string type, int[] criteriaValues, string path)
         {
             this.criteriaValues = criteriaValues;
-            uri = new Uri(path);
+            uri = new Uri(path, UriKind.Relative);
             bitmapImage = new BitmapImage(uri);
+            this.type = type;
+            flowCoefficient = FormCalculation.flowCoefficientDictionary[type];
         }
         public override string ToString() => $"{name}";
     }
