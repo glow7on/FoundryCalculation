@@ -22,6 +22,7 @@ namespace FoundryCalculation
     {
         const double oxideFoam = 0.000005; //Толщина оксидной пены
         const int millimetersInMeters = 100;
+        const double g = 9.8;
         string path;
 
         //Входные данные (вводимые вручную)
@@ -36,6 +37,8 @@ namespace FoundryCalculation
         List<Coverage> coverages = new List<Coverage>();
         List<MeltSupplyScheme> meltSupplySchemes = new List<MeltSupplyScheme>();
 
+        public static Dictionary<string, double> flowCoefficientDictionary;
+
         //Выбираемые через "ComboBox" элементы
         Alloys currentAlloys;
         Mixture currentMixture;
@@ -45,7 +48,7 @@ namespace FoundryCalculation
         //Общие выходные данные ??
         int pathLength; //Длина пути участка
         int crossSectionalArea; //Площадь поперечного сечения
-        double halfWallThickness; //Половина толщины стенки?
+        double halfWallThickness; //double castingWallThickness
         double reducedCastingSize; //Приведенный размер отливки
         double fillingRateLimit; //Предельно допустимая скорость заполнения
         double squareFirstToSecond; //Площадь поперечного сечения на участке 1-2
@@ -84,7 +87,13 @@ namespace FoundryCalculation
             int[] siphonArray = new int[] { 75000, 9000, 3100 };
             int[] sideArray = new int[] { 45000, 5500, 1800 };
             BitmapImage bitmapImage = new BitmapImage();
-            this.path = @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png";
+
+            flowCoefficientDictionary = new Dictionary<string, double>
+            {
+                { "Боковая", 0.45 },
+                { "Сифонная", 0.4 },
+                { "Вертикально-щелевая", 0.5 }
+            };
 
             //Алюминиевый сплав
             Alloys[] aluminiumArray = new Alloys[] {
@@ -143,12 +152,12 @@ namespace FoundryCalculation
             //Литниковые системы
             MeltSupplyScheme[] meltSuppliesArray = new MeltSupplyScheme[]
             {
-                new MeltSupplyScheme("Боковая", sideArray, @"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\Side.png") {name = "Боковой подвод"},
-                new MeltSupplyScheme("Боковая", sideArray, @"C:\\Users\\user\\Documents\\GitHub\\FoundryCalculation\\FoundryCalculation\\Resources\\SideTwo.png") {name = "Боковой подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Siphon.png") {name = "Сифонный подвод"},
-                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\SiphonTwo.png") {name = "Сифонный подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\Tiered.png") {name = "Ярусный подвод с двух сторон"},
-                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, @"C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\Resources\VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
+                new MeltSupplyScheme("Боковая", sideArray, "/Resources/Side.png") {name = "Боковой подвод"},
+                new MeltSupplyScheme("Боковая", sideArray, "/Resources/SideTwo.png") {name = "Боковой подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/Siphon.png") {name = "Сифонный подвод"},
+                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/SiphonTwo.png") {name = "Сифонный подвод с двух сторон"},
+                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/Tiered.png") {name = "Ярусный подвод с двух сторон"},
+                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, "/Resources/VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
             };
             //Сложность конфмгурации формы
             string[] ComplexityArray = new string[] { "Простая", "Средняя", "Сложная" };
@@ -171,6 +180,8 @@ namespace FoundryCalculation
             if (RefreshInputData())
             {
                 ChangeCurrentElements();
+
+                halfWallThickness = formThick / 2;
 
                 SquareSectionsCalculation();
                 pathLength = formLength;
@@ -244,12 +255,9 @@ namespace FoundryCalculation
         {
             fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension) / (currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
         }
-
-        void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
+        void speedInArrowCalculation()//скорость течения расплава в узком месте (стояке), м/с (1.1.5)
         {
-            MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
-            SupplySchemeImage.Source = selectedItem.bitmapImage;
-            SelectedSchemeLabel.Content = "Выбранная схема подвода: " + selectedItem.name;
+            speedInArrow = currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure);
         }
         void squareInArrowCalculation()//площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
         {
@@ -277,6 +285,13 @@ namespace FoundryCalculation
         void meltHeatTransferCaclculation()//Теплоотдача расплава 
         {
             meltHeatTransfer = (currentAlloys.heatOutput * nusseltCriterion) / halfWallThickness;
+        }
+
+        void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
+        {
+            MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
+            SupplySchemeImage.Source = selectedItem.bitmapImage;
+            SelectedSchemeLabel.Content = "Выбранная схема подвода: " + selectedItem.name;
         }
     }
 }
