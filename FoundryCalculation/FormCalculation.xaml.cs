@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace FoundryCalculation
 {
@@ -22,11 +23,11 @@ namespace FoundryCalculation
     {
         const double oxideFoam = 0.000005; //Толщина оксидной пены
         const int millimetersInMeters = 100;
-        const double g = 9.8;
-        string path;
+        const double g = 9.81; 
+        string imagePath; //Путь до файла с изображением
 
         //Входные данные (вводимые вручную)
-        int formHeight; //Высота формы h0
+        int formHeight; //Высота формы h0 (отливка)
         int formWidth; //Ширина формы b
         int formThick; //Толщина формы 
         int formLength; //Длина формы l
@@ -45,9 +46,11 @@ namespace FoundryCalculation
         Coverage currentCoverage;
         MeltSupplyScheme currentMeltSupplyScheme;
 
+        int fillingTemperature; //Температура заливки
+
         //Общие выходные данные ??
-        int pathLength; //Длина пути участка
-        int crossSectionalArea; //Площадь поперечного сечения
+        double pathLength; //Длина пути участка
+        double crossSectionalArea; //Площадь поперечного сечения
         double halfWallThickness; //double castingWallThickness
         double reducedCastingSize; //Приведенный размер отливки
         double fillingRateLimit; //Предельно допустимая скорость заполнения
@@ -66,7 +69,7 @@ namespace FoundryCalculation
         double flowStopTemperature; //Температура остановки потока расплава T0
 
         //Для расчета исполняемых размеров вертикально-щелевой литниковой системы
-        double permissibleMeltFlowRate; //Допустимый расход расплава
+        double permissibleMeltFlowRate; //Допустимый расход расплава (металла)
         double thicknessGap; //Толщина щели 
         double spreadingAngle; //Угол растекания расплава
         double transverseSpreadingRate; //скорость поперечного растекания расплава в полости литейной формы
@@ -86,7 +89,7 @@ namespace FoundryCalculation
             int[] verticallySlottedArray = new int[] { 150000, 18500, 6500 };
             int[] siphonArray = new int[] { 75000, 9000, 3100 };
             int[] sideArray = new int[] { 45000, 5500, 1800 };
-            BitmapImage bitmapImage = new BitmapImage();
+            BitmapImage bitmapImage = new BitmapImage();           
 
             flowCoefficientDictionary = new Dictionary<string, double>
             {
@@ -152,12 +155,12 @@ namespace FoundryCalculation
             //Литниковые системы
             MeltSupplyScheme[] meltSuppliesArray = new MeltSupplyScheme[]
             {
-                new MeltSupplyScheme("Боковая", sideArray, "/Resources/Side.png") {name = "Боковой подвод"},
-                new MeltSupplyScheme("Боковая", sideArray, "/Resources/SideTwo.png") {name = "Боковой подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/Siphon.png") {name = "Сифонный подвод"},
-                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/SiphonTwo.png") {name = "Сифонный подвод с двух сторон"},
-                new MeltSupplyScheme("Сифонная", siphonArray, "/Resources/Tiered.png") {name = "Ярусный подвод с двух сторон"},
-                new MeltSupplyScheme("Вертикально-щелевая", verticallySlottedArray, "/Resources/VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
+                new SideScheme("Боковая", sideArray, "/Resources/Side.png") {name = "Боковой подвод"},
+                new SideTwoScheme("Боковая", sideArray, "/Resources/SideTwo.png") {name = "Боковой подвод с двух сторон"},
+                new SiphonScheme("Сифонная", siphonArray, "/Resources/Siphon.png") {name = "Сифонный подвод"},
+                new SiphonTwoScheme("Сифонная", siphonArray, "/Resources/SiphonTwo.png") {name = "Сифонный подвод с двух сторон"},
+                new TieredScheme("Сифонная", siphonArray, "/Resources/Tiered.png") {name = "Ярусный подвод с двух сторон"},
+                new VerticallySlottedScheme("Вертикально-щелевая", verticallySlottedArray, "/Resources/VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
             };
             //Сложность конфмгурации формы
             string[] ComplexityArray = new string[] { "Простая", "Средняя", "Сложная" };
@@ -182,25 +185,33 @@ namespace FoundryCalculation
                 ChangeCurrentElements();
 
                 halfWallThickness = formThick / 2;
-                SquareSectionsCalculation();
-                pathLength = formLength;
-                ReducedCastingSizeCalculation();
+                SquareSectionsCalculation(); //
+                pathLength = formLength; //Вероятно изменить
+                ReducedCastingSizeCalculation(); //
                 slugFormationCriteriaCalculation();
                 fillingRateLimitCalculation();
-
+                speedInArrowCalculation();
+                squareInArrowCalculation();
+                meltThermalConductivityCalculation();
+                pecleCriterionCalculation();
+                nusseltCriterionCalculation();
+                meltHeatTransferCaclculation();
+                fillingTemperature = currentAlloys.liquidusTemperature + 50; //Рекомендованная температура металла для подачи Изменить
+                meltFlowFrontTemperatureCalculation();
+                if (meltFlowFrontTemperature < currentAlloys.liquidusTemperature) { MessageBox.Show("Температура на участке 1-2 меньше температуры Ликвидус"); }
             }
         }
 
-        bool RefreshInputData()
+        bool RefreshInputData() //Валидация данных (Проверка на корректность ввода)
         {
             bool check = true;
             try
             {
-                formHeight = Int32.Parse(formHeightBox.Text);
-                formWidth = Int32.Parse(formWidthBox.Text);
-                formThick = Int32.Parse(formThickBox.Text);
-                formLength = Int32.Parse(formLengthBox.Text);
-                meltPressure = Int32.Parse(meltPressureBox.Text);
+                formHeight = Int32.Parse(formHeightBox.Text) / millimetersInMeters;
+                formWidth = Int32.Parse(formWidthBox.Text) / millimetersInMeters;
+                formThick = Int32.Parse(formThickBox.Text) / millimetersInMeters;
+                formLength = Int32.Parse(formLengthBox.Text) / millimetersInMeters;
+                meltPressure = Int32.Parse(meltPressureBox.Text) / millimetersInMeters;
             }
             catch
             {
@@ -212,7 +223,7 @@ namespace FoundryCalculation
             return check;
         }
 
-        void ChangeCurrentElements()
+        void ChangeCurrentElements() //Обновляет введенные значения пользователя, записывая их в используемый* объект, для удобства расчетов и чтения кода
         {
             if (AluminiumRadioBtn.IsChecked == true) { currentAlloys = aluminiumAlloys[AlloySelection.SelectedIndex]; }
             else { currentAlloys = magniumAlloys[AlloySelection.SelectedIndex]; }
@@ -221,70 +232,89 @@ namespace FoundryCalculation
             currentMeltSupplyScheme = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
         }
 
-
-        private void SwitchToAluminium(object sender, RoutedEventArgs e)
+        private void SwitchToAluminium(object sender, RoutedEventArgs e) //Смена выборки для сплавов на Алюминиевые
         {
             AlloySelection.ItemsSource = aluminiumAlloys;
         }
 
-        private void SwitchToMagnium(object sender, RoutedEventArgs e)
+        private void SwitchToMagnium(object sender, RoutedEventArgs e) //Смена выборки для сплавов на Магниевые
         {
             AlloySelection.ItemsSource = magniumAlloys;
         }
 
         void SquareSectionsCalculation()
         {
-            squareFirstToSecond = (formWidth / millimetersInMeters) * (formThick / millimetersInMeters);
-            squareFirstToSecondLabel.Content = "Площадь поперечного сечения на участке 1-2: " + squareFirstToSecond;
+            squareFirstToSecond = formWidth * formThick;
+            squareFirstToSecondLabel.Content = squareFirstToSecond;
         }
 
         void ReducedCastingSizeCalculation()
         {
-            reducedCastingSize = (formThick / millimetersInMeters) / 2;
-            reducedCastingSizeLabel.Content = "Приведенный размер отливки: " + reducedCastingSize;
+            reducedCastingSize = formThick / 2;
+            reducedCastingSizeLabel.Content = reducedCastingSize;
         }
-
-
         void slugFormationCriteriaCalculation() //Добавить вывод?
         {
             slugFormationCriteria = currentMeltSupplyScheme.criteriaValues[ComplexitySelection.SelectedIndex];
         }
-
-        void fillingRateLimitCalculation() //Добавить вывод
+        void fillingRateLimitCalculation()
         {
-            fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension) / (currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
+            fillingRateLimit = Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension)
+                / (currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3);
+
+            fillingRateLimitLabel.Content = fillingRateLimit;
         }
         void speedInArrowCalculation()//скорость течения расплава в узком месте (стояке), м/с (1.1.5)
         {
-            speedInArrow = currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure);
+            speedInArrow = currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure));
+            speedInArrowLabel.Content = speedInArrow;
         }
         void squareInArrowCalculation()//площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
         {
             squareInArrow = (squareFirstToSecond * fillingRateLimit) / speedInArrow;
+            squareInArrowLabel.Content = squareInArrow;
         }
-        void meltThermalConductivityCalculation()//Температуропроводность расплава (1.1.11)
+        void meltThermalConductivityCalculation()//Температуропроводность расплава аж (1.1.11)
         {
             meltThermalConductivity = currentAlloys.heatOutput / (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity);
+            meltThermalConductivityLabel.Content = meltThermalConductivity;
         }
         void pecleCriterionCalculation()//критерий Пекле
         {
             pecleCriterion = (fillingRateLimit * halfWallThickness) / meltThermalConductivity;
+            pecleCriterionLabel.Content = pecleCriterion;
         }
         void nusseltCriterionCalculation()//критерий Нуссельта
         {
-            if (pecleCriterion < 50)
-            {
-                nusseltCriterion = 1;
-            }
-            else
-            {
-                nusseltCriterion = 0.33 * Math.Pow(pecleCriterion, 0.82);
-            }
+            if (pecleCriterion < 50) { nusseltCriterion = 1; }
+            else { nusseltCriterion = 0.033 * Math.Pow(pecleCriterion, 0.82); }
+            nusseltCriterionLabel.Content = nusseltCriterion;
         }
-        void meltHeatTransferCaclculation()//Теплоотдача расплава 
+        void meltHeatTransferCaclculation()//Теплоотдача расплава α
         {
             meltHeatTransfer = (currentAlloys.heatOutput * nusseltCriterion) / halfWallThickness;
+            meltHeatTransferLabel.Content = meltHeatTransfer;
         }
+        void meltFlowFrontTemperatureCalculation()//температура фронта потока расплава T(n-n+1)
+        {
+            meltFlowFrontTemperature = Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
+                Math.Exp((-currentMeltSupplyScheme.GetPathLengthFirst(pathLength) * meltHeatTransfer / 2) / 
+                (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * speedInArrow *
+                (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature;
+
+            meltFlowFrontTemperatureLabel.Content = meltFlowFrontTemperature;
+        }
+
+        //Расчет Вертикально-щелевой 
+        void permissibleMeltFlowRateCalculation()
+        {
+
+        }
+        void thicknessGapCalculation()
+        {
+
+        }
+        //Расчет Вертикально-щелевой /
 
         void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
         {

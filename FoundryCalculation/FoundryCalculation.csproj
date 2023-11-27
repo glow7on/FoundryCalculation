@@ -55,23 +55,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SchemeVariables.cs" />
     <Compile Include="InputData.cs" />
     <Compile Include="FormCalculation.xaml.cs">
       <DependentUpon>FormCalculation.xaml</DependentUpon>
     </Compile>
-    <Page Include="StartPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include=".xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="FormCalculation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,8 +103,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\LoadFile.png" />
-    <Content Include="Resources\NewFile.png" />
+    <Resource Include="Resources\LoadFile.png" />
+    <Resource Include="Resources\NewFile.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Side.png" />

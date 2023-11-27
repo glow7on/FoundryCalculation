@@ -30,4 +30,3 @@ C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\obj\Debug\F
 C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\obj\Debug\FoundryCalculation.Properties.Resources.resources
 C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\obj\Debug\FoundryCalculation.csproj.GenerateResource.cache
 C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\obj\Debug\FoundryCalculation.csproj.CoreCompileInputs.cache
-C:\Users\user\Documents\GitHub\FoundryCalculation\FoundryCalculation\obj\Debug\FoundryCalculation_Content.g.cs

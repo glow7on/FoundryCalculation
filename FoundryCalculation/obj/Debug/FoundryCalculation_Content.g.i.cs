@@ -9,6 +9,5 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/loadfile.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/newfile.png")]
 
 

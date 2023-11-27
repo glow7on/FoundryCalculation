@@ -45,11 +45,22 @@ namespace FoundryCalculation
     public class Mixture
     {
         public string name;
-        public int initialTemperature; //Температура формы начальная Тфн, К
-        public double thermalConductivity; //Теплопровод-ность формы λф, Вт/м·К
-        public int heatCapacity; //Теплоемкость сф, Дж/кг·К
-        public int dencity; //Плотность ρф, кг/м3
-        public int heatStorageCapacity;//Теплоаккумулирующая способность bф, Вт·с1/2/(м2·К)
+
+        /// <summary> Температура формы начальная Тфн, К </summary>
+        public int initialTemperature;
+
+        /// <summary> Теплопроводность формы λф, Вт/м·К </summary>
+        public double thermalConductivity;
+
+        /// <summary> Теплоемкость сф, Дж/кг·К </summary>
+        public int heatCapacity;
+
+        /// <summary> Плотность ρф, кг/м3 </summary>
+        public int dencity;
+
+        /// <summary> Теплоаккумулирующая способность bф, Вт·с1/2/(м2·К) </summary>
+        public int heatStorageCapacity;
+
         public Mixture(int initialTemperature, double thermalConductivity, int heatCapacity, int dencity, int heatStorageCapacity)
         {
             this.initialTemperature = initialTemperature;
@@ -101,6 +112,9 @@ namespace FoundryCalculation
             this.type = type;
             flowCoefficient = FormCalculation.flowCoefficientDictionary[type];
         }
+        public virtual double GetPathLengthFirst(double pathLength) => pathLength; //Возвращает длину пути для участка 1-2
+        public virtual double GetPathLengthSecond(double pathLength) => pathLength; //Возвращает длину пути для участка 1-3
+        public virtual double GetMeltPressure(double formHeight, double meltPressure) => meltPressure; //Возвращает напор расплава Н
         public override string ToString() => $"{name}";
     }
 }

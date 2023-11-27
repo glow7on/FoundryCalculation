@@ -8,13 +8,11 @@
         Title="Начальное окно"
         Height="450" Width="700" Background="#FF1E1E1E">
     <Grid Background="#FF202020">
-        <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="82,84,421,83" Click="CreateFile" FontSize="24" Foreground="White" Background="#FF424040">
-            <Image Source="/Resources/NewFile.png" Height="127" Width="114" Margin="0,-20,0,0">
-            </Image>
+        <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="82,84,421,83" FontSize="24" Foreground="White" Background="#FF424040" Click="CreateNewForm">
+            <Image Source="/Resources/NewFile.png" Height="140" Width="100"/>
         </Button>
-        <Button x:Name="OpenDataButton" Margin="372,84,70,0" Click="OpenData" Background="#FF424040" Height="72" VerticalAlignment="Top">
-            <Image Source ="/Resources/LoadFile.png"  HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="60" Margin="-110,0,0,0" Stretch="Fill">
-            </Image>
+        <Button x:Name="OpenDataButton" Margin="372,84,70,0" Background="#FF424040" Height="72" VerticalAlignment="Top">
+            <Image Source="Resources/LoadFile.png" Height="54" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Stretch="Fill" Margin="0,0,150,0"/>
         </Button>
         <Button x:Name="AboutButton" Content="О программе" Margin="404,188,102,0" Background="#FF424040" FontSize="20" Foreground="White" FontFamily="Yu Gothic UI Light" Height="59" VerticalAlignment="Top"/>
         <Label Content="Создать расчёт" HorizontalAlignment="Left" Margin="106,0,0,99" VerticalAlignment="Bottom" Width="149" FontSize="20" FontFamily="Yu Gothic UI Light" Foreground="White"/>
