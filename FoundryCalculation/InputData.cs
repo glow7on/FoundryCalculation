@@ -12,20 +12,40 @@ namespace FoundryCalculation
     public class Alloys
     {
         public string name;
-        public int liquidusTemperature; //Температура ликвидус Тл, К
-        public int solidusTemperature; //Температура солидус Тс, К
-        public int heatCapacity; //Теплоемкость Сж, Дж/Кг*К
-        public int liquidMeltDensity; //Плотность жидкого расплава p(ж), Кг/м^3
-        public int heatOutput; // Теплопроводность λж, Вт/м·К
-        public double heatStorageCapacity;//Теплоаккумулирующая способность bж, Вт·с1/2/(м2·К)
-        public double thermalConductivity; //Температуропроводность a(ж), м^2/с
-        public int kineticViscosity; //Кинетическая вязкость v, 10^-7 * м^2/с
-        public double surfaceTension; //Поверхностное натяжение σ, H/м
-        public double flowStopTemperature; //Температура остановки потока Т0, К
+
+        /// <summary> Температура ликвидус Тл, К </summary>
+        public double liquidusTemperature; 
+
+        /// <summary> Температура солидус Тс, К </summary>
+        public double solidusTemperature; 
+
+        /// <summary> Теплоемкость Сж, Дж/Кг*К </summary>
+        public double heatCapacity; 
+
+        /// <summary> Плотность жидкого расплава p(ж), Кг/м^3 </summary>
+        public double liquidMeltDensity; 
+
+        /// <summary> Теплопроводность λж, Вт/м·К </summary>
+        public double heatOutput; 
+
+        /// <summary> Теплоаккумулирующая способность bж, Вт·с1/2/(м2·К) </summary>
+        public double heatStorageCapacity;
+
+        /// <summary> Температуропроводность a(ж), м^2/с </summary>
+        public double thermalConductivity;
+
+        /// <summary> Кинетическая вязкость v, 10^-7 * м^2/с </summary>
+        public double kineticViscosity;
+
+        /// <summary> Поверхностное натяжение σ, H/м </summary>
+        public double surfaceTension; 
+
+        /// <summary> Температура остановки потока Т0, К </summary>
+        public double flowStopTemperature;
         public override string ToString() => $"{name}";
 
-        public Alloys(int liquidusTemperature, int solidusTemperature, int heatCapacity, int liquidMeltDensity,
-            int heatOutput, double heatStorageCapacity, double thermalConductivity, int kineticViscosity,
+        public Alloys(double liquidusTemperature, double solidusTemperature, double heatCapacity, double liquidMeltDensity,
+            int heatOutput, double heatStorageCapacity, double thermalConductivity, double kineticViscosity,
             double surfaceTension, double flowStopTemperature)
         {
             this.liquidusTemperature = liquidusTemperature;
@@ -47,21 +67,21 @@ namespace FoundryCalculation
         public string name;
 
         /// <summary> Температура формы начальная Тфн, К </summary>
-        public int initialTemperature;
+        public double initialTemperature;
 
         /// <summary> Теплопроводность формы λф, Вт/м·К </summary>
         public double thermalConductivity;
 
         /// <summary> Теплоемкость сф, Дж/кг·К </summary>
-        public int heatCapacity;
+        public double heatCapacity;
 
         /// <summary> Плотность ρф, кг/м3 </summary>
-        public int dencity;
+        public double dencity;
 
         /// <summary> Теплоаккумулирующая способность bф, Вт·с1/2/(м2·К) </summary>
-        public int heatStorageCapacity;
+        public double heatStorageCapacity;
 
-        public Mixture(int initialTemperature, double thermalConductivity, int heatCapacity, int dencity, int heatStorageCapacity)
+        public Mixture(double initialTemperature, double thermalConductivity, double heatCapacity, double dencity, double heatStorageCapacity)
         {
             this.initialTemperature = initialTemperature;
             this.thermalConductivity = thermalConductivity;
