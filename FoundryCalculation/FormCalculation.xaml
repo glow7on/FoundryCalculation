@@ -106,7 +106,7 @@
                 <Label x:Name="maxSpreadingLengthLabel1" Content="null" HorizontalAlignment="Left" Margin="334,106,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="permissibleFlowHeightLabel1" Content="null" HorizontalAlignment="Left" Margin="334,131,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="crossSectionalAreaLabel1" Content="null" HorizontalAlignment="Left" Margin="334,157,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock HorizontalAlignment="Left" Margin="7,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" LineHeight="25" Foreground="White" Width="303"><Run Text="ИЗМЕНЕНО"/><LineBreak/><Run Text="Площадь стояка:"/><LineBreak/><Run Text="Размер стояка:"/><LineBreak/><Run Text="Диаметр колодца"/><LineBreak/><Run Text="Толщина щели:"/><LineBreak/><Run Text="Максимальная длина расстояния раслпава, м:"/><LineBreak/><Run Text="Высота потока расплава при допустимом расходе, м:"/><LineBreak/><Run Text="Площадь поперечного сечения():"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="7,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" LineHeight="25" Foreground="White" Width="303"><Run Text="ВЕРТИКАЛЬНО-ЩЕЛЕВОЙ ИЗМЕНЕНО"/><LineBreak/><Run Text="Площадь стояка:"/><LineBreak/><Run Text="Размер стояка:"/><LineBreak/><Run Text="Диаметр колодца"/><LineBreak/><Run Text="Толщина щели:"/><LineBreak/><Run Text="Максимальная длина расстояния раслпава, м:"/><LineBreak/><Run Text="Высота потока расплава при допустимом расходе, м:"/><LineBreak/><Run Text="Площадь поперечного сечения():"/></TextBlock>
 
             </Grid>
         </Grid>
