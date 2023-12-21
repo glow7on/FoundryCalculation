@@ -68,6 +68,7 @@ namespace FoundryCalculation
         double meltThermalConductivity; //Температуропроводность расплава 
         double meltFlowFrontTemperature; //Температура фронта потока расплава
         double flowStopTemperature; //Температура остановки потока расплава T0
+        double meltPressureFirstToThird; //Напор расплава на участке 1-3
 
         //Для расчета исполняемых размеров вертикально-щелевой литниковой системы
         double permissibleMeltFlowRate; //Допустимый расход расплава (металла)
@@ -142,6 +143,7 @@ namespace FoundryCalculation
                 new Mixture(290, 0.326, 795,  1500, 620) {name = "Кварцевый песок, сухой"},
                 new Mixture(290, 1.130, 2100, 1650, 1970) {name = "Кварцевый песок, влажный"}
             };
+
             //Покрытие
             Coverage[] coverageArray = new Coverage[]
             {
@@ -153,6 +155,7 @@ namespace FoundryCalculation
                 new Coverage(0.41) {name = "Прокаленный тальк"},
                 new Coverage(0.09) {name = "Сажа"}
             };
+
             //Литниковые системы
             MeltSupplyScheme[] meltSuppliesArray = new MeltSupplyScheme[]
             {
@@ -163,15 +166,18 @@ namespace FoundryCalculation
                 new TieredScheme("Сифонная", siphonArray, "/Resources/Tiered.png") {name = "Ярусный подвод с двух сторон"},
                 new VerticallySlottedScheme("Вертикально-щелевая", verticallySlottedArray, "/Resources/VerticallySlotted.png") {name = "Вертикально-щелевой подвод"}
             };
+
             //Сложность конфмгурации формы
             string[] ComplexityArray = new string[] { "Простая", "Средняя", "Сложная" };
 
+            //Добавление массива объектов в листы для видимости в коде
             aluminiumAlloys.AddRange(aluminiumArray);
             magniumAlloys.AddRange(magnesiumArray);
             mixtures.AddRange(mixtureArray);
             coverages.AddRange(coverageArray);
             meltSupplySchemes.AddRange(meltSuppliesArray);
 
+            //Добавление в UI блоки выбор из созданных объектов
             AlloySelection.ItemsSource = aluminiumAlloys;
             MixtureSelection.ItemsSource = mixtures;
             CoverageSelection.ItemsSource = coverages;
@@ -183,26 +189,27 @@ namespace FoundryCalculation
         {
             if (RefreshInputData())
             {
-                ChangeCurrentElements();
+                ChangeCurrentElements(); //Изменяет значения в выделенных объектах для упрощенного чтения кода и вызова
 
                 halfWallThickness = formThick / 2;
                 SquareSectionsCalculation(); //
                 pathLength = formLength; //Вероятно изменить
                 ReducedCastingSizeCalculation(); //
-                slugFormationCriteriaRefresh();
-                fillingRateLimitCalculation();
-                speedInArrowCalculation();
-                squareInArrowCalculation();
-                meltThermalConductivityCalculation();
-                pecleCriterionCalculation();
-                nusseltCriterionCalculation();
-                meltHeatTransferCaclculation();
+                SlugFormationCriteriaRefresh();
+                FillingRateLimitCalculation();
+                SpeedInArrowCalculation(currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure)); //Добавить иной вывод
+                SquareInArrowCalculation();
+                MeltThermalConductivityCalculation();
+                PecleCriterionCalculation();
+                NusseltCriterionCalculation();
+                MeltHeatTransferCaclculation();
                 fillingTemperature = (Int32)currentAlloys.liquidusTemperature + 50; //Рекомендованная температура металла для подачи Изменить
-                meltFlowFrontTemperatureCalculation();
+                MeltFlowFrontTemperatureCalculation();
                 if (meltFlowFrontTemperature < currentAlloys.liquidusTemperature) {
-                    MessageBox.Show("Температура на участке 1-2 меньше температуры Ликвидус"); 
-
+                    MessageBox.Show("Температура на участке 1-2 меньше температуры Ликвидус");
                 }
+                MeltPressureCalculation();
+                SpeedInArrowCalculation(meltPressureFirstToThird); //Добавить иной вывод
             }
         }
 
@@ -245,60 +252,60 @@ namespace FoundryCalculation
             AlloySelection.ItemsSource = magniumAlloys;
         }
 
-        void SquareSectionsCalculation()
+        void SquareSectionsCalculation() //Площадь поперечного сечения участок 1-2
         {
             squareFirstToSecond = Math.Round(formWidth * formThick, 3);
             squareFirstToSecondLabel.Content = squareFirstToSecond;
         }
 
-        void ReducedCastingSizeCalculation() //
+        void ReducedCastingSizeCalculation() //Приведенный размер отливки 
         {
             reducedCastingSize = Math.Round(formThick / 2, 3);
             reducedCastingSizeLabel.Content = reducedCastingSize;
         }
-        void slugFormationCriteriaRefresh() //Добавить вывод?
+        void SlugFormationCriteriaRefresh() //Критерий шлакообразования (выбирается по сложности и типу системы)
         {
             slugFormationCriteria = currentMeltSupplyScheme.criteriaValues[ComplexitySelection.SelectedIndex];
         }
-        void fillingRateLimitCalculation()
+        void FillingRateLimitCalculation() //Предельно допустимая скорость заполнения полости литейной формы
         {
             fillingRateLimit = Math.Round(Math.Pow((slugFormationCriteria * currentAlloys.kineticViscosity * oxideFoam * currentAlloys.surfaceTension)
                 / (currentAlloys.liquidMeltDensity * reducedCastingSize), (double)1 / 3), 3);
 
             fillingRateLimitLabel.Content = fillingRateLimit;
         }
-        void speedInArrowCalculation()//скорость течения расплава в узком месте (стояке), м/с (1.1.5)
+        void SpeedInArrowCalculation(double meltPressure) //Скорость течения расплава в узком месте (стояке), м/с (1.1.5) (ω уз.)
         {
-            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure)),3);
+            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure),3);
             speedInArrowLabel.Content = speedInArrow;
         }
-        void squareInArrowCalculation()//площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
+        void SquareInArrowCalculation() //Площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
         {
             squareInArrow = Math.Round((squareFirstToSecond * fillingRateLimit) / speedInArrow, 3);
             squareInArrowLabel.Content = squareInArrow;
         }
-        void meltThermalConductivityCalculation()//Температуропроводность расплава аж (1.1.11)
+        void MeltThermalConductivityCalculation() //Температуропроводность расплава аж (1.1.11)
         {
             meltThermalConductivity = Math.Round(currentAlloys.heatOutput / (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity), 3);
             meltThermalConductivityLabel.Content = meltThermalConductivity;
         }
-        void pecleCriterionCalculation()//критерий Пекле
+        void PecleCriterionCalculation() //Критерий Пекле
         {
             pecleCriterion = Math.Round((fillingRateLimit * halfWallThickness) / meltThermalConductivity, 3);
             pecleCriterionLabel.Content = pecleCriterion;
         }
-        void nusseltCriterionCalculation()//критерий Нуссельта
+        void NusseltCriterionCalculation()//критерий Нуссельта
         {
             if (pecleCriterion < 50) { nusseltCriterion = 1; }
             else { nusseltCriterion = 0.033 * Math.Pow(pecleCriterion, 0.82); }
             nusseltCriterionLabel.Content = nusseltCriterion;
         }
-        void meltHeatTransferCaclculation()//Теплоотдача расплава α
+        void MeltHeatTransferCaclculation() //Теплоотдача расплава α
         {
             meltHeatTransfer = Math.Round((currentAlloys.heatOutput * nusseltCriterion) / halfWallThickness, 3);
             meltHeatTransferLabel.Content = meltHeatTransfer;
         }
-        void meltFlowFrontTemperatureCalculation()//температура фронта потока расплава T(n-n+1)
+        void MeltFlowFrontTemperatureCalculation() //Температура фронта потока расплава T(n-n+1)
         {
             meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
                 Math.Exp((-currentMeltSupplyScheme.GetPathLengthFirst(pathLength) * meltHeatTransfer / 2) / 
@@ -306,6 +313,10 @@ namespace FoundryCalculation
                 (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature, 3);
 
             meltFlowFrontTemperatureLabel.Content = meltFlowFrontTemperature;
+        }
+        void MeltPressureCalculation() //Напор расплава на участке 1-3 ДОБАВИТЬ ВЫВОД
+        {
+            meltPressureFirstToThird = currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure) - 1 / 2 * (1 / 2 * formHeight);
         }
 
         //Расчет Вертикально-щелевой 

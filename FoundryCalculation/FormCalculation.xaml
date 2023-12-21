@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:FoundryCalculation"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="Расчет формы" Height="615" Width="1160">
-    <Grid Background="#FF202020" Margin="0,0,0,-128">
+        Title="Расчет формы" Height="644" Width="1160">
+    <Grid Background="#FF202020" Margin="0,0,0,-115">
         <Grid Margin="38,38,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="359" Height="284" VerticalAlignment="Top">
             <TextBox x:Name="formHeightBox" HorizontalAlignment="Left" Margin="234,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
             <TextBox x:Name="formWidthBox" HorizontalAlignment="Left" Margin="234,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
@@ -47,28 +47,21 @@
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
         <Grid Margin="424,38,39,0" Background="#FF2B2B2B" Height="661" VerticalAlignment="Top">
-            <Grid Margin="453,10,0,0" Background="#FF373737" Height="84" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
+            <Grid Margin="453,28,0,0" Background="#FF373737" Height="84" VerticalAlignment="Top" HorizontalAlignment="Left" Width="192">
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,8,0,0" LineHeight="25" Foreground="White"><Run Text="Критерий Пекле:"/><LineBreak/><Run Text="Критерий Нуссельта:"/><LineBreak/><Run Text="Коэффициент расхода:"/></TextBlock>
                 <Label x:Name="pecleCriterionLabel" Content="null" HorizontalAlignment="Left" Margin="145,5,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="nusseltCriterionLabel" Content="null" HorizontalAlignment="Left" Margin="145,0,0,0" VerticalAlignment="Center" Foreground="White"/>
                 <Label x:Name="expenseRatioLabel" Content="null" HorizontalAlignment="Left" Margin="145,55,0,0" VerticalAlignment="Top" Foreground="White"/>
             </Grid>
-            <Grid Margin="20,195,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="394" Height="297" VerticalAlignment="Top">
-                <Label x:Name="riserSquareLabel" Content="null" HorizontalAlignment="Left" Margin="334,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="riserSizeLabel_Копировать" Content="null" HorizontalAlignment="Left" Margin="334,31,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="pitDiameterLabel" Content="null" HorizontalAlignment="Left" Margin="334,56,0,0" Foreground="White" VerticalAlignment="Top"/>
-                <Label x:Name="thicknessGapLabel" Content="null" HorizontalAlignment="Left" Margin="334,79,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="squareInArrowLabel" Content="null" HorizontalAlignment="Left" Margin="334,103,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="maxSpreadingLengthLabel" Content="null" HorizontalAlignment="Left" Margin="334,129,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="squareFirstToSecondLabel" Content="null" HorizontalAlignment="Left" Margin="334,155,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="permissibleFlowHeightLabel" Content="null" HorizontalAlignment="Left" Margin="334,181,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="crossSectionalAreaLabel" Content="null" HorizontalAlignment="Left" Margin="334,204,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label x:Name="reducedSizeLabel" Content="null" HorizontalAlignment="Left" Margin="334,230,0,0" VerticalAlignment="Top" Foreground="White" Width="45"/>
-                <Label x:Name="reducedCastingSizeLabel" Content="null" HorizontalAlignment="Left" Margin="334,256,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <TextBlock HorizontalAlignment="Left" Margin="7,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" LineHeight="25" Foreground="White"><Run Text="Площадь стояка:"/><LineBreak/><Run Text="Размер стояка:"/><LineBreak/><Run Text="Диаметр колодца"/><LineBreak/><Run Text="Толщина щели:"/><LineBreak/><Run Text="Площадь поперечного сечения в узком месте:"/><LineBreak/><Run Text="Максимальная длина расстояния раслпава, м:"/><LineBreak/><Run Text="Площадь поперечного сечения на участке (1-2)"/><LineBreak/><Run Text="Высота потока расплава при допустимом расходе, м:"/><LineBreak/><Run Text="Площадь поперечного сечения():"/><LineBreak/><Run Text="Приведенный размер растекающегося потока расплава:"/><LineBreak/><Run Text="Приведенный размер отливки:"/></TextBlock>
+            <Grid Margin="10,334,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="372" Height="149" VerticalAlignment="Top">
+                <Label x:Name="squareInArrowLabel" Content="null" HorizontalAlignment="Left" Margin="333,44,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="squareFirstToSecondLabel" Content="null" HorizontalAlignment="Left" Margin="334,67,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="reducedSizeLabel" Content="null" HorizontalAlignment="Left" Margin="333,93,0,0" VerticalAlignment="Top" Foreground="White" Width="45"/>
+                <Label x:Name="reducedCastingSizeLabel" Content="null" HorizontalAlignment="Left" Margin="334,116,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock HorizontalAlignment="Left" Margin="7,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" LineHeight="25" Foreground="White"><Run Text="ИЗМЕНЕНО"/><LineBreak/> <Run Text="Площадь поперечного сечения в узком месте:"/><LineBreak/><Run Text="Площадь поперечного сечения на участке (1-2)"/><LineBreak/><Run Text="Приведенный размер растекающегося потока расплава:"/><LineBreak/><Run Text="Приведенный размер отливки:"/></TextBlock>
 
             </Grid>
-            <Grid Margin="20,10,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="416" Height="166" VerticalAlignment="Top">
+            <Grid Margin="20,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="416" Height="166" VerticalAlignment="Top">
                 <Label x:Name="flowStopTemperatureLabel" Content="null" HorizontalAlignment="Left" Margin="367,4,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="meltFrontTemperatureLabel" Content="null" HorizontalAlignment="Left" Margin="367,30,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="meltFlowFrontTemperatureLabel" Content="null" HorizontalAlignment="Left" Margin="367,55,0,0" VerticalAlignment="Top" Foreground="White"/>
@@ -77,7 +70,7 @@
                 <Label x:Name="spreadingMeltTransferLabel" Content="null" HorizontalAlignment="Left" Margin="367,129,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="356" LineHeight="25" Foreground="White" Margin="9,0,0,0"><Run Text="Температура остановки потока расплава Т0:"/><LineBreak/><Run Text="Температура фронта потока расплава Т1-2 в узле 2:"/><LineBreak/><Run Text="Температура фронта потока расплава"/><LineBreak/><Run Text="Температуропроводность расплава:"/><LineBreak/><Run Text="Теплоотдача расплава:"/><LineBreak/><Run Text="Теплоотдача расплава при проточно-поперечном растекании:"/></TextBlock>
             </Grid>
-            <Grid Margin="20,508,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="394" Height="117" VerticalAlignment="Top">
+            <Grid Margin="20,539,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="394" Height="117" VerticalAlignment="Top">
                 <Label x:Name="fillingRateLimitLabel" Content="null" HorizontalAlignment="Left" Margin="334,6,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="transverseSpreadingRateLabel" Content="null" HorizontalAlignment="Left" Margin="334,32,0,58" Foreground="White"/>
                 <Label x:Name="meltFlowRateLabel" Content="null" HorizontalAlignment="Left" Margin="334,57,0,0" VerticalAlignment="Top" Foreground="White"/>
@@ -93,7 +86,7 @@
 
                 </TextBlock>
             </Grid>
-            <Grid Margin="453,107,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="236" Height="90" VerticalAlignment="Top">
+            <Grid Margin="453,127,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="236" Height="90" VerticalAlignment="Top">
                 <Label x:Name="permissibleMeltFlowRateLabel" Content="null" HorizontalAlignment="Left" Margin="195,6,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="calculationPlessureLabel" Content="null" HorizontalAlignment="Left" Margin="195,32,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="spreadingAngleLabel" Content="null" HorizontalAlignment="Left" Margin="195,57,0,0" VerticalAlignment="Top" Foreground="White"/>
@@ -104,6 +97,17 @@
                     <LineBreak/>
                     Угол растекания расплава:
                 </TextBlock>
+            </Grid>
+            <Grid Margin="417,272,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="390" Height="221" VerticalAlignment="Top">
+                <Label x:Name="riserSquareLabel1" Content="null" HorizontalAlignment="Left" Margin="334,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="riserSizeLabel_Копировать1" Content="null" HorizontalAlignment="Left" Margin="334,31,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="pitDiameterLabel1" Content="null" HorizontalAlignment="Left" Margin="334,56,0,0" Foreground="White" VerticalAlignment="Top"/>
+                <Label x:Name="thicknessGapLabel1" Content="null" HorizontalAlignment="Left" Margin="334,79,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="maxSpreadingLengthLabel1" Content="null" HorizontalAlignment="Left" Margin="334,106,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="permissibleFlowHeightLabel1" Content="null" HorizontalAlignment="Left" Margin="334,131,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label x:Name="crossSectionalAreaLabel1" Content="null" HorizontalAlignment="Left" Margin="334,157,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <TextBlock HorizontalAlignment="Left" Margin="7,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" LineHeight="25" Foreground="White" Width="303"><Run Text="ИЗМЕНЕНО"/><LineBreak/><Run Text="Площадь стояка:"/><LineBreak/><Run Text="Размер стояка:"/><LineBreak/><Run Text="Диаметр колодца"/><LineBreak/><Run Text="Толщина щели:"/><LineBreak/><Run Text="Максимальная длина расстояния раслпава, м:"/><LineBreak/><Run Text="Высота потока расплава при допустимом расходе, м:"/><LineBreak/><Run Text="Площадь поперечного сечения():"/></TextBlock>
+
             </Grid>
         </Grid>
         <Button Content="Применить изменения" HorizontalAlignment="Left" Margin="38,545,0,0" VerticalAlignment="Top" Height="46" Width="359" Background="#FF2B2B2B" Foreground="White" Click="StartCalculation"/>
