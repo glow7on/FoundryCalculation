@@ -24,7 +24,8 @@ namespace FoundryCalculation
     {
         const double OXIDEFOAM = 0.000005; //Толщина оксидной пены
         const double millimetersInMeters = 1000;
-        const double g = 9.81; 
+        const double g = 9.81;
+        const double S = 1;
         string imagePath; //Путь до файла с изображением
 
         //Входные данные (вводимые вручную)
@@ -97,10 +98,10 @@ namespace FoundryCalculation
         double reducedSize; //приведенный размер растекающегося потока расплава
         double spreadingMeltTransfer; //теплоотдача расплава при проточно-поперечном растекании,  Вт/(м2К)
         double maxSpreadingLength; //максимальную длину растекания расплава, м
-        double expenseRatio; //Коэффициент расхода
+        double expenseRatio; //Определяем возможность применения одного колодца
+        double pitDiameter; //Диаметр колодца
         double riserSquare; //Площадь стояка
         double riserSize; //Размер стояка
-        double pitDiameter; //Диаметр колодца
 
         public FormCalculation()
         {
@@ -115,7 +116,7 @@ namespace FoundryCalculation
             {
                 { "Боковая", 0.45 },
                 { "Сифонная", 0.4 },
-                { "Вертикально-щелевая", 0.5 }
+                { "Вертикально-щелевая", 0.4 }
             };
 
             //Алюминиевый сплав
@@ -400,13 +401,56 @@ namespace FoundryCalculation
 
 
         //Расчет Вертикально-щелевой 
-        void permissibleMeltFlowRateCalculation()
+        void permissibleMeltFlowRateСalculation() //допустимый расход металла
         {
-
+            permissibleMeltFlowRate = (formLength + formHeight) * fillingRateLimit * formThick; // L = (l + ho)
+        } 
+        void thicknessGapCalculation() //Толщина щели
+        {
+            thicknessGap = formThick * 0.7;
         }
-        void thicknessGapCalculation()
+        void spreadingAngleCalculation() //угол растекания расплава исходя из  максимального расхода
         {
+            spreadingAngle = 0.4 * Math.Pow(permissibleMeltFlowRate, 0.195) * Math.Pow(thicknessGap, -1.09);
+        }
+        void transverseSpreadingRateCalculation() //скорость поперечного растекания
+        {
+            transverseSpreadingRate = Math.Pow(Math.Pow(S,2) * (permissibleMeltFlowRate / (2 * reducedCastingSize) * Math.Sin(spreadingAngle)), 1.0 / 3);
+        }
+        void permissibleFlowHeightCalculation() //высотa потока расплава при допустимом расходе
+        {
+            permissibleFlowHeight = Math.Pow(Math.Pow(permissibleMeltFlowRate / (S * 2 * reducedCastingSize), 2) * (1 / Math.Sin(spreadingAngle)), 1.0 / 3);
+        }
+        void reducedSizeCalculation() //приведенный размер растекающегося потока
+        {
+            reducedSize = 2 * permissibleFlowHeight * 2 * reducedCastingSize / (2 * permissibleFlowHeight + 2 * reducedCastingSize);
+        }
+        void spreadingMeltTransferCalculation() //Теплоотдача расплава
+        {
+            spreadingMeltTransfer = (nusseltCriterion * currentAlloys.heatOutput) / reducedCastingSize;
+        }
+        void maxSpreadingLengthCalculation() //Определяем максимальную длину растекания расплава
+        {   
+            maxSpreadingLength = Math.Log((fillingTemperature - currentMixture.initialTemperature) / (currentAlloys.flowStopTemperature - currentMixture.initialTemperature)) * currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * transverseSpreadingRate * (1 + currentAlloys.heatStorageCapacity / currentAlloys.heatStorageCapacity) / spreadingMeltTransfer;
+        }
+        void expenseRatioCalculation() 
+        {
+            if(maxSpreadingLength >= 1.2 * (formLength + formHeight))
+            {
 
+            }
+        }
+        void pitDiameterCalculation() 
+        {
+            pitDiameter = 4 * thicknessGap;
+        }
+        void riserSquareCalculation() 
+        {
+            riserSquare = permissibleMeltFlowRate / (currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure));
+        }
+        void riserSizeCalculation() 
+        {
+            riserSize = Math.Sqrt(riserSquare / 3.14);
         }
         //Расчет Вертикально-щелевой /
 

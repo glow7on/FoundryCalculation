@@ -12,7 +12,7 @@
             <TextBox x:Name="formHeightBox" HorizontalAlignment="Left" Margin="234,9,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
             <TextBox x:Name="formWidthBox" HorizontalAlignment="Left" Margin="234,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
             <TextBox x:Name="formThickBox" HorizontalAlignment="Left" Margin="234,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
-            <TextBox x:Name="formLengthBox" HorizontalAlignment="Left" Margin="234,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
+            <TextBox x:Name="formLengthBox" HorizontalAlignment="Left" Margin="234,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22" TextChanged="formLengthBox_TextChanged"/>
             <TextBox x:Name="meltPressureBox" HorizontalAlignment="Left" Margin="234,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22"/>
             <TextBox x:Name="fillingTemperatureBox" HorizontalAlignment="Left" Margin="234,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Height="22" IsEnabled="False"/>
             <Label x:Name="fillingTemperatureLabel" Content="(Рек.: )" HorizontalAlignment="Left" Margin="145,174,0,0" VerticalAlignment="Top" Foreground="White"/>
