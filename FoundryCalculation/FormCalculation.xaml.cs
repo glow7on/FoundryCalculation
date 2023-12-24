@@ -24,7 +24,9 @@ namespace FoundryCalculation
     {
         const double OXIDEFOAM = 0.000005; //Толщина оксидной пены
         const double millimetersInMeters = 1000;
-        const double g = 9.81; 
+        const double G = 9.81;
+        const int S = 1;
+        const double PI = 3.14;
         string imagePath; //Путь до файла с изображением
 
         //Входные данные (вводимые вручную)
@@ -115,7 +117,7 @@ namespace FoundryCalculation
             {
                 { "Боковая", 0.45 },
                 { "Сифонная", 0.4 },
-                { "Вертикально-щелевая", 0.5 }
+                { "Вертикально-щелевая", 0.4 }
             };
 
             //Алюминиевый сплав
@@ -320,7 +322,7 @@ namespace FoundryCalculation
         }
         void SpeedInArrowCalculation(double speedInArrow, double meltPressure, Label speedInArrowLabel) //Скорость течения расплава в узком месте (стояке), м/с (1.1.5) (ω уз.)
         {
-            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure), 3);
+            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * G * meltPressure), 3);
             speedInArrowLabel.Content = speedInArrow;
         }
         void SquareInArrowCalculation() //Площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
@@ -385,7 +387,7 @@ namespace FoundryCalculation
         }
         void FlowRateCalculation(double meltFlowRate, double meltPressure) //скорость расплава при движении на участке ДОБАВИТЬ ВЫВОД
         {
-            meltFlowRate = (squareInArrow * currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * g * meltPressure) / squareSection);
+            meltFlowRate = (squareInArrow * currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * G * meltPressure) / squareSection);
         }
         void MeltPressureThirdToFourthCalculation() //Напор расплава на участке 3-4 ДОБАВИТЬ ВЫВОД
         {
@@ -400,13 +402,59 @@ namespace FoundryCalculation
 
 
         //Расчет Вертикально-щелевой 
-        void permissibleMeltFlowRateCalculation()
+        void permissibleMeltFlowRateСalculation() //допустимый расход металла
         {
-
+            permissibleMeltFlowRate = (formLength + formHeight) * fillingRateLimit * formThick; // L = (l + ho)
         }
-        void thicknessGapCalculation()
+        void thicknessGapCalculation() //Толщина щели
         {
+            thicknessGap = formThick * 0.7;
+        }
+        void spreadingAngleCalculation() //угол растекания расплава исходя из  максимального расхода
+        {
+            spreadingAngle = 0.4 * Math.Pow(permissibleMeltFlowRate, 0.195) * Math.Pow(thicknessGap, -1.09);
+        }
+        void transverseSpreadingRateCalculation() //скорость поперечного растекания
+        {
+            transverseSpreadingRate = Math.Pow(Math.Pow(S, 2) * (permissibleMeltFlowRate / (2 * reducedCastingSize) * Math.Sin(spreadingAngle)), 1.0 / 3);
+        }
+        void permissibleFlowHeightCalculation() //высотa потока расплава при допустимом расходе
+        {
+            permissibleFlowHeight = Math.Pow(Math.Pow(permissibleMeltFlowRate / (S * 2 * reducedCastingSize), 2) * (1 / Math.Sin(spreadingAngle)), 1.0 / 3);
+        }
+        void reducedSizeCalculation() //приведенный размер растекающегося потока
+        {
+            reducedSize = 2 * permissibleFlowHeight * 2 * reducedCastingSize / (2 * permissibleFlowHeight + 2 * reducedCastingSize);
+        }
+        void spreadingMeltTransferCalculation() //Теплоотдача расплава
+        {
+            spreadingMeltTransfer = (nusseltCriterion * currentAlloys.heatOutput) / reducedCastingSize;
+        }
+        void maxSpreadingLengthCalculation() //Определяем максимальную длину растекания расплава
+        {
+            maxSpreadingLength = Math.Log((fillingTemperature - currentMixture.initialTemperature)
+                / (currentAlloys.flowStopTemperature - currentMixture.initialTemperature)) * currentAlloys.heatCapacity *
+                currentAlloys.liquidMeltDensity * reducedCastingSize * transverseSpreadingRate *
+                (1 + currentAlloys.heatStorageCapacity / currentAlloys.heatStorageCapacity) / spreadingMeltTransfer;
+        }
+        void expenseRatioCalculation()
+        {
+            if (maxSpreadingLength >= 1.2 * (formLength + formHeight))
+            {
 
+            }
+        }
+        void pitDiameterCalculation()
+        {
+            pitDiameter = 4 * thicknessGap;
+        }
+        void riserSquareCalculation()
+        {
+            riserSquare = permissibleMeltFlowRate / (currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2 * G * meltPressure));
+        }
+        void riserSizeCalculation()
+        {
+            riserSize = Math.Sqrt(riserSquare / PI);
         }
         //Расчет Вертикально-щелевой /
 
