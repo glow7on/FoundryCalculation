@@ -26,6 +26,7 @@ namespace FoundryCalculation
         const double millimetersInMeters = 1000;
         const double g = 9.81;
         const double S = 1;
+        const double PI = 3.14;
         string imagePath; //Путь до файла с изображением
 
         //Входные данные (вводимые вручную)
@@ -224,25 +225,25 @@ namespace FoundryCalculation
                 PecleCriterionCalculation();
                 NusseltCriterionCalculation();
                 MeltHeatTransferCaclculation();
-                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature1_2, this.speedInArrow1_2, currentMeltSupplyScheme.GetPathLengthFirst(pathLength), meltFrontTemperatureLabelFirst);
+                MeltFlowFrontTemperatureCalculationFirst(this.meltFlowFrontTemperature1_2, this.speedInArrow1_2);
                 if (meltFlowFrontTemperature1_2 < currentAlloys.liquidusTemperature) { MessageBox.Show("Температура на участке 1-2 меньше температуры Ликвидус"); }
 
                 MeltPressureFirstToThirdCalculation();
                 SpeedInArrowCalculation(this.speedInArrow1_3, this.meltPressure1_3, speedInArrowLabelSecond);
                 FlowRateCalculation(this.meltFlowRate1_3, this.meltPressure1_3); //Добавить вывод
-                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature1_3, meltFlowRate1_3, currentMeltSupplyScheme.GetPathLengthSecond(pathLength), meltFrontTemperatureLabelSecond); //Добавить вывод
+                MeltFlowFrontTemperatureCalculationSecond(this.meltFlowFrontTemperature1_3, meltFlowRate1_3); //Добавить вывод
                 if (meltFlowFrontTemperature1_3 < currentAlloys.liquidusTemperature) { MessageBox.Show("Температура на участке 1-3 меньше температуры Ликвидус"); }
 
                 MeltPressureThirdToFourthCalculation();
                 SpeedInArrowCalculation(this.speedInArrow3_4, this.meltPressure3_4, speedInArrowLabelThird);
                 FlowRateCalculation(this.meltFlowRate3_4, this.meltPressure3_4);
-                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature3_4, meltFlowRate3_4, pathLength, meltFrontTemperatureLabelThird);
+                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature3_4, meltFlowRate3_4, meltFrontTemperatureLabelThird);
                 if (meltFlowFrontTemperature3_4 < currentAlloys.liquidusTemperature) { MessageBox.Show("Температура на участке 3-4 меньше температуры Ликвидус"); }
 
                 MeltPressureFourthToFifthCalculation();
                 SpeedInArrowCalculation(this.speedInArrow4_5, this.meltPressure4_5, speedInArrowLabelFourth);
                 FlowRateCalculation(this.meltFlowRate4_5, this.meltPressure4_5);
-                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature4_5, meltFlowRate4_5, pathLength, meltFrontTemperatureLabelFourth);
+                MeltFlowFrontTemperatureCalculation(this.meltFlowFrontTemperature4_5, meltFlowRate4_5, meltFrontTemperatureLabelFourth);
                 if (meltFlowFrontTemperature4_5 < currentAlloys.liquidusTemperature) { MessageBox.Show("Температура на участке 4-5 меньше температуры Ликвидус"); }
             }
         }
@@ -351,7 +352,25 @@ namespace FoundryCalculation
             meltHeatTransferLabel.Content = meltHeatTransfer;
         }
 
-        void MeltFlowFrontTemperatureCalculation(double meltFlowFrontTemperature, double flowSpeed, double pathLength,  Label meltFrontTemperatureLabel) //Температура фронта потока расплава T(n-n+1)
+        void MeltFlowFrontTemperatureCalculationFirst(double meltFlowFrontTemperature, double flowSpeed) //Температура фронта потока расплава T(n-n+1)
+        {
+            meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
+                Math.Exp((-currentMeltSupplyScheme.GetPathLengthFirst(pathLength) * meltHeatTransfer / 2) / 
+                (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * flowSpeed *
+                (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature, 3);
+
+            meltFrontTemperatureLabelFirst.Content = meltFlowFrontTemperature;
+        }
+        void MeltFlowFrontTemperatureCalculationSecond(double meltFlowFrontTemperature, double flowSpeed) //Температура фронта потока расплава T(n-n+1)
+        {
+            meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
+                Math.Exp((-currentMeltSupplyScheme.GetPathLengthSecond(pathLength) * meltHeatTransfer / 2) /
+                (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * flowSpeed *
+                (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature, 3);
+
+            meltFrontTemperatureLabelSecond.Content = meltFlowFrontTemperature;
+        }
+        void MeltFlowFrontTemperatureCalculation(double meltFlowFrontTemperature, double flowSpeed, Label meltFrontTemperatureLabel) //Температура фронта потока расплава T(n-n+1)
         {
             meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
                 Math.Exp((-pathLength * meltHeatTransfer / 2) /
@@ -413,7 +432,10 @@ namespace FoundryCalculation
         }
         void maxSpreadingLengthCalculation() //Определяем максимальную длину растекания расплава
         {   
-            maxSpreadingLength = Math.Log((fillingTemperature - currentMixture.initialTemperature) / (currentAlloys.flowStopTemperature - currentMixture.initialTemperature)) * currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * transverseSpreadingRate * (1 + currentAlloys.heatStorageCapacity / currentAlloys.heatStorageCapacity) / spreadingMeltTransfer;
+            maxSpreadingLength = Math.Log((fillingTemperature - currentMixture.initialTemperature)
+                / (currentAlloys.flowStopTemperature - currentMixture.initialTemperature)) * currentAlloys.heatCapacity *
+                currentAlloys.liquidMeltDensity * reducedCastingSize * transverseSpreadingRate *
+                (1 + currentAlloys.heatStorageCapacity / currentAlloys.heatStorageCapacity) / spreadingMeltTransfer;
         }
         void expenseRatioCalculation() 
         {
@@ -432,7 +454,7 @@ namespace FoundryCalculation
         }
         void riserSizeCalculation() 
         {
-            riserSize = Math.Sqrt(riserSquare / 3.14);
+            riserSize = Math.Sqrt(riserSquare / PI);
         }
         //Расчет Вертикально-щелевой /
 
