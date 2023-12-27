@@ -213,7 +213,7 @@ namespace FoundryCalculation
 
                 halfWallThickness = formThick / 2;
                 SquareSectionsCalculation();
-                pathLength = currentMeltSupplyScheme.GetPathLength(formLength); //Вероятно изменить
+                pathLength = currentMeltSupplyScheme.GetPathLength(formLength);
                 ReducedCastingSizeCalculation();
                 SlugFormationCriteriaRefresh();
                 FillingRateLimitCalculation();
@@ -381,12 +381,12 @@ namespace FoundryCalculation
         }
         void MeltPressureThirdToFourthCalculation() //Напор расплава на участке 3-4 ДОБАВИТЬ ВЫВОД
         {
-            meltPressure3_4 = meltPressure1_3 - (0.5 * formHeight) - (0.25 * formHeight);
+            meltPressure3_4 = meltPressure1_2 - (0.5 * formHeight) - (0.25 * formHeight);
             meltPressureLabelThird.Content = meltPressure3_4;
         }
         void MeltPressureFourthToFifthCalculation() //Напор расплава на участке 4-5 ДОБАВИТЬ ВЫВОД
         {
-            meltPressure4_5 = meltPressure3_4 - formHeight;
+            meltPressure4_5 = meltPressure1_2 - formHeight;
             meltPressureLabelFourth.Content = meltPressure4_5;
         }
 
