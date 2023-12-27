@@ -114,5 +114,8 @@
     <Resource Include="Resources\Tiered.png" />
     <Resource Include="Resources\VerticallySlotted.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

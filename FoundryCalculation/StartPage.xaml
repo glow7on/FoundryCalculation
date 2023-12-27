@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FoundryCalculation"
         mc:Ignorable="d"
-        Title="Начальное окно"
+        Icon="/Resources/Icon.png"
+        Title="Стартовое окно"
         Height="417" Width="700" Background="#FF1E1E1E">
     <Grid Background="#FF202020" Margin="0,0,10,-6">
         <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="68,57,0,0" FontSize="24" Foreground="White" Background="#FF424040" Click="CreateNewForm" HorizontalAlignment="Left" Width="197" Height="267" VerticalAlignment="Top">
