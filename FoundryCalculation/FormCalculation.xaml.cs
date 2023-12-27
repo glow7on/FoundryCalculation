@@ -42,7 +42,6 @@ namespace FoundryCalculation
 
         //Общие выходные данные
         double pathLength; //Длина пути участка
-        double crossSectionalArea; //Площадь поперечного сечения
         double halfWallThickness; //double castingWallThickness
         double reducedCastingSize; //Приведенный размер отливки
         double fillingRateLimit; //Предельно допустимая скорость заполнения
@@ -59,7 +58,6 @@ namespace FoundryCalculation
         double meltFlowRate3_4; // Скорость течения расплава на участке 3-4
         double meltFlowRate4_5; // Скорость течения расплава на участке 4-5
 
-        double calculationPlessure; //Расчетный напор
         double meltHeatTransfer; //Теплоотдача расплава 
         double nusseltCriterion; //Критерий Нуссельта
         double pecleCriterion; //Критерий Пекле
@@ -70,8 +68,6 @@ namespace FoundryCalculation
         double meltFlowFrontTemperature1_3; //Температура фронта потока расплава участка 1-3
         double meltFlowFrontTemperature3_4; //Температура фронта потока расплава участка 3-4
         double meltFlowFrontTemperature4_5; //Температура фронта потока расплава учаска 4-5
-
-        double flowStopTemperature; //Температура остановки потока расплава T0
 
         double meltPressure1_2; //Напор расплава на участке 1-2
         double meltPressure1_3; //Напор расплава на участке 1-3
@@ -92,7 +88,6 @@ namespace FoundryCalculation
         double riserSquare; //Площадь стояка
         double riserSize; //Размер стояка
         double pitDiameter; //Диаметр колодца
-
         public FormCalculation()
         {
             InitializeComponent();
@@ -145,7 +140,6 @@ namespace FoundryCalculation
             //Состав смеси
             Mixture[] mixtureArray = new Mixture[]
             {
-                new Mixture(1, 1, 1, 1, 1) { name = "Отсутствие покрытия" },
                 new Mixture(293, 0.510, 1100, 1600, 950) {name = "Типовая смесь для алюминиевых и магниевых отливок"},
                 new Mixture(290, 1.28,  1080, 1650, 1600) {name = "Формовочная песчано-глинистая сухая с 10% глины"},//290-1790
                 new Mixture(290, 0.705, 1650, 1600, 1377) {name = "Стержневая с 0,5 % сульфидной барды и 19% древесных опилок, сухая"},//290-1570
@@ -273,7 +267,7 @@ namespace FoundryCalculation
             }
             catch
             {
-                MessageBox.Show("Ошибка входных данных");
+                MessageBox.Show("Недопустимый формат входных данных");
                 check = false;
             }
             if (AlloySelection.SelectedItem == null | MixtureSelection.SelectedItem == null |
