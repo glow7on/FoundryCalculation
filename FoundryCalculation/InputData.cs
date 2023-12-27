@@ -132,8 +132,7 @@ namespace FoundryCalculation
             this.type = type;
             flowCoefficient = FormCalculation.flowCoefficientDictionary[type];
         }
-        public virtual double GetPathLengthFirst(double pathLength) => pathLength; //Возвращает длину пути для участка 1-2
-        public virtual double GetPathLengthSecond(double pathLength) => pathLength; //Возвращает длину пути для участка 1-3
+        public virtual double GetPathLength(double pathLength) => pathLength; //Возвращает длину пути для участка 1-2
         public virtual double GetMeltPressure(double formHeight, double meltPressure) => meltPressure; //Возвращает напор расплава Н
         public override string ToString() => $"{name}";
     }

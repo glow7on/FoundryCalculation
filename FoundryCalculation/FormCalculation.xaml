@@ -51,7 +51,7 @@
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
         <Grid Margin="424,38,39,0" Background="#FF2B2B2B" Height="683" VerticalAlignment="Top">
-            <Grid Margin="453,28,0,0" Background="#FF373737" Height="84" VerticalAlignment="Top" HorizontalAlignment="Left" Width="213">
+            <Grid Margin="471,28,0,0" Background="#FF373737" Height="84" VerticalAlignment="Top" HorizontalAlignment="Left" Width="213">
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,8,0,0" LineHeight="25" Foreground="White"><Run Text="Критерий Пекле:"/><LineBreak/><Run Text="Критерий Нуссельта:"/><LineBreak/><Run Text="Коэффициент расхода:"/></TextBlock>
                 <Label x:Name="pecleCriterionLabel" Content="null" HorizontalAlignment="Left" Margin="145,5,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="nusseltCriterionLabel" Content="null" HorizontalAlignment="Left" Margin="145,0,0,0" VerticalAlignment="Center" Foreground="White"/>
@@ -70,7 +70,7 @@
                 
 
             </Grid>
-            <Grid Margin="20,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="416" Height="215" VerticalAlignment="Top">
+            <Grid Margin="20,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="423" Height="215" VerticalAlignment="Top">
                 <Label x:Name="flowStopTemperatureLabel" Content="null" HorizontalAlignment="Left" Margin="367,4,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="meltFrontTemperatureLabelFirst" Content="null" HorizontalAlignment="Left" Margin="367,30,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="meltFrontTemperatureLabelSecond" Content="null" HorizontalAlignment="Left" Margin="367,56,0,0" VerticalAlignment="Top" Foreground="White"/>
@@ -107,7 +107,7 @@
 
                 </TextBlock>
             </Grid>
-            <Grid Margin="453,127,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="236" Height="90" VerticalAlignment="Top">
+            <Grid Margin="471,126,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="236" Height="90" VerticalAlignment="Top">
                 <Label x:Name="permissibleMeltFlowRateLabel" Content="null" HorizontalAlignment="Left" Margin="195,6,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="calculationPlessureLabel" Content="null" HorizontalAlignment="Left" Margin="195,32,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="spreadingAngleLabel" Content="null" HorizontalAlignment="Left" Margin="195,57,0,0" VerticalAlignment="Top" Foreground="White"/>

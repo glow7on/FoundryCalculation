@@ -20,7 +20,7 @@ namespace FoundryCalculation
         {
 
         }
-        public override double GetPathLengthFirst(double pathLength) => pathLength/2;
+        public override double GetPathLength(double pathLength) => pathLength / 2;
     }
 
     public class SiphonScheme : MeltSupplyScheme
@@ -40,7 +40,7 @@ namespace FoundryCalculation
 
         }
         public override double GetMeltPressure(double formHeight, double meltPressure) => meltPressure + (formHeight / 2);
-        public override double GetPathLengthFirst(double pathLength) => pathLength / 2;
+        public override double GetPathLength(double pathLength) => pathLength / 2;
     }
 
     public class TieredScheme : MeltSupplyScheme
@@ -50,7 +50,7 @@ namespace FoundryCalculation
 
         }
         public override double GetMeltPressure(double formHeight, double meltPressure) => meltPressure + (formHeight / 2);
-        public override double GetPathLengthSecond(double pathLength) => pathLength / 2;
+        public override double GetPathLength(double pathLength) => pathLength / 2;
     }
 
     public class VerticallySlottedScheme : MeltSupplyScheme
