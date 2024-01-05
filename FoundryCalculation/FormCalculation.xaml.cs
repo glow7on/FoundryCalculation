@@ -16,7 +16,7 @@ namespace FoundryCalculation
         const double G = 9.81;
         const int S = 1;
         const double PI = 3.14;
-        string imagePath; //Путь до файла с изображением
+        //string imagePath; //Путь до файла с изображением
 
         //Входные данные (вводимые вручную)
         double formHeight; //Высота формы h0 (отливка)
@@ -88,8 +88,38 @@ namespace FoundryCalculation
         double riserSquare; //Площадь стояка
         double riserSize; //Размер стояка
         double pitDiameter; //Диаметр колодца
+
         public FormCalculation()
         {
+
+//            var sections = new List<Section>
+//              {
+//                  new Section { Name = "1-2", FlowRate = fillingRateLimit, SpeedInArrowLabel = speedInArrowLabelSecond, FlowRateLabel = FlowRateLabelSecond, MeltFrontTemperatureLabel = meltFrontTemperatureLabelFirst },
+//                  new Section { Name = "1-3", SpeedInArrowLabel = speedInArrowLabelSecond, FlowRateLabel = FlowRateLabelSecond, MeltFrontTemperatureLabel = meltFrontTemperatureLabelSecond },
+//                  new Section { Name = "3-4", SpeedInArrowLabel = speedInArrowLabelThird, FlowRateLabel = FlowRateLabelThird, MeltFrontTemperatureLabel = meltFrontTemperatureLabelThird },
+//                  new Section { Name = "4-5", SpeedInArrowLabel = speedInArrowLabelFourth, FlowRateLabel = FlowRateLabelFourth, MeltFrontTemperatureLabel = meltFrontTemperatureLabelFourth }
+//              };
+
+//            foreach (var section in sections)
+//            {
+//                if (section.Name == "1-2")
+//                {
+//                    MeltFlowFrontTemperatureCalculation(ref section.MeltFlowFrontTemperature, section.FlowRate, section.MeltFrontTemperatureLabel);
+//                }
+//                else
+//                {
+//                    MeltPressureCalculation(section.Name);
+//                    SpeedInArrowCalculation(ref section.SpeedInArrow, this.GetMeltPressure(section.Name), section.SpeedInArrowLabel);
+//                    FlowRateCalculation(ref section.FlowRate, this.GetMeltPressure(section.Name), section.FlowRateLabel);
+//                    MeltFlowFrontTemperatureCalculation(ref section.MeltFlowFrontTemperature, section.FlowRate, section.MeltFrontTemperatureLabel);
+//                }
+
+//                if (section.MeltFlowFrontTemperature < currentAlloys.liquidusTemperature)
+//                {
+//                    MessageBox.Show($"Температура на участке {section.Name} меньше температуры Ликвидус");
+//                }
+//            }
+
             InitializeComponent();
             //Табличные значения критерия шлакообразования для различных конфигураций по типу литниковой системы: простой, средней и сложной соответственно
             int[] verticallySlottedArray = new int[] { 150000, 18500, 6500 };
@@ -122,19 +152,19 @@ namespace FoundryCalculation
                new Alloys(917, 808, 1249, 2200, 83, 15101.9,  0.0000302, 0.0000006, 0.86, 884.3) {name = "АМ5 (АЛ19)"},
                new Alloys(843, 718, 1290, 2200, 83, 15347.77, 0.0000292, 0.0000006, 0.86, 805.5) {name = "АМг11 (АЛ22)"}
             };
-
+            
             //Магниевый сплав
             Alloys[] magnesiumArray = new Alloys[]
             {
-                new Alloys(923, 918, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 921.5) {name = "Мл2"},
-                new Alloys(901, 834, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 880.9) {name = "Мл3"},
-                new Alloys(883, 673, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 820) {name = "Мл4"},
-                new Alloys(880, 703, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 826.9) {name = "Мл5"},
-                new Alloys(873, 713, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 825) {name = "Мл6"},
-                new Alloys(913, 823, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 886) {name = "Мл10"},
-                new Alloys(921, 866, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 904.5) {name = "Мл11"},
-                new Alloys(908, 823, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 882.5) {name = "Мл12"},
-                new Alloys(904, 812, 1254, 1600, 84, 12982.2, 0.00004186603, 7, 0.529, 876.4) {name = "Мл15"}
+                new Alloys(923, 918, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 921.5) {name = "Мл2"},
+                new Alloys(901, 834, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 880.9) {name = "Мл3"},
+                new Alloys(883, 673, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 820) {name = "Мл4"},
+                new Alloys(880, 703, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 826.9) {name = "Мл5"},
+                new Alloys(873, 713, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 825) {name = "Мл6"},
+                new Alloys(913, 823, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 886) {name = "Мл10"},
+                new Alloys(921, 866, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 904.5) {name = "Мл11"},
+                new Alloys(908, 823, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 882.5) {name = "Мл12"},
+                new Alloys(904, 812, 1254, 1600, 84, 12982.2, 0.00004186603, 0.0000007, 0.529, 876.4) {name = "Мл15"}
             };
 
             //Состав смеси
@@ -180,6 +210,9 @@ namespace FoundryCalculation
             mixtures.AddRange(mixtureArray);
             coverages.AddRange(coverageArray);
             meltSupplySchemes.AddRange(meltSuppliesArray);
+
+
+            
 
             //Добавление в UI блоки выбор из созданных объектов
             AlloySelection.ItemsSource = aluminiumAlloys;
@@ -363,14 +396,14 @@ namespace FoundryCalculation
                 meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
                 Math.Exp((-pathLength * (meltHeatTransfer / 2.0)) /
                 (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * flowSpeed *
-                (1 + (currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity)))) + currentMixture.initialTemperature, 3);
+                (1 + (currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity)))) + currentMixture.initialTemperature, 0);
             }
             else
             {
                 meltFlowFrontTemperature = Math.Round(Math.Abs(fillingTemperature - currentMixture.initialTemperature) *
                 Math.Exp((-pathLength * meltHeatTransfer / 2.0 * Math.Sqrt(currentCoverage.thermalConductivity)) /
                 (currentAlloys.heatCapacity * currentAlloys.liquidMeltDensity * reducedCastingSize * Math.Sqrt(currentMixture.thermalConductivity) * flowSpeed *
-                (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature, 3);
+                (1 + currentAlloys.heatStorageCapacity / currentMixture.heatStorageCapacity))) + currentMixture.initialTemperature, 0);
             }
 
             meltFrontTemperatureLabel.Content = meltFlowFrontTemperature;
@@ -415,7 +448,7 @@ namespace FoundryCalculation
         }
         void spreadingAngleCalculation() //угол растекания расплава исходя из  максимального расхода
         {
-            spreadingAngle = 0.4 * Math.Round(Math.Pow(permissibleMeltFlowRate, 0.195) * Math.Pow(thicknessGap, -1.09), 3);
+            spreadingAngle = Math.Round(0.4 * Math.Pow(permissibleMeltFlowRate, 0.195) * Math.Pow(thicknessGap, -1.09), 3);
             spreadingAngleLabel.Content = spreadingAngle;
         }
         void transverseSpreadingRateCalculation() //скорость поперечного растекания расплава в полости литейной форму
@@ -502,4 +535,3 @@ namespace FoundryCalculation
         }
     }
 }
-

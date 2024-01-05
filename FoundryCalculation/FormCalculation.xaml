@@ -54,7 +54,7 @@
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
 
-        <Grid x:Name="StdForm" Margin="424,32,39,0" Background="#FF2B2B2B" Height="650" VerticalAlignment="Top" Visibility="Hidden">
+        <Grid x:Name="StdForm" Margin="424,32,39,0" Background="#FF2B2B2B" Height="650" VerticalAlignment="Top">
             <Grid Margin="458,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="388" Height="228" VerticalAlignment="Top">
                 <Label x:Name="squareInArrowLabel" Content="null" HorizontalAlignment="Left" Margin="333,38,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
                 <Label x:Name="squareFirstToSecondLabel" Content="null" HorizontalAlignment="Left" Margin="333,62,0,0" VerticalAlignment="Top" Foreground="White" Width="37"/>
@@ -67,13 +67,13 @@
 
 
             </Grid>
-            <Grid Margin="20,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="413" Height="191" VerticalAlignment="Top">
-                <Label x:Name="meltFrontTemperatureLabelFirst" Content="null" HorizontalAlignment="Left" Margin="352,30,0,0" VerticalAlignment="Top" Foreground="White" Width="46"/>
-                <Label x:Name="meltFrontTemperatureLabelSecond" Content="null" HorizontalAlignment="Left" Margin="352,56,0,0" VerticalAlignment="Top" Foreground="White" Width="46"/>
-                <Label x:Name="meltFrontTemperatureLabelThird" Content="null" HorizontalAlignment="Left" Margin="352,0,0,0" VerticalAlignment="Center" Foreground="White" Width="49"/>
-                <Label x:Name="meltFrontTemperatureLabelFourth" Content="null" HorizontalAlignment="Left" Margin="352,106,0,0" VerticalAlignment="Top" Foreground="White" Width="46"/>
-                <Label x:Name="meltThermalConductivityLabel" Content="null" HorizontalAlignment="Left" Margin="352,132,0,0" VerticalAlignment="Top" Foreground="White" Width="46"/>
-                <Label x:Name="meltHeatTransferLabel" Content="null" HorizontalAlignment="Left" Margin="352,157,0,0" VerticalAlignment="Top" Foreground="White" Height="29" Width="49"/>
+            <Grid Margin="20,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="425" Height="191" VerticalAlignment="Top">
+                <Label x:Name="meltFrontTemperatureLabelFirst" Content="null" HorizontalAlignment="Left" Margin="352,30,0,0" VerticalAlignment="Top" Foreground="White" Width="63"/>
+                <Label x:Name="meltFrontTemperatureLabelSecond" Content="null" HorizontalAlignment="Left" Margin="352,56,0,0" VerticalAlignment="Top" Foreground="White" Width="63"/>
+                <Label x:Name="meltFrontTemperatureLabelThird" Content="null" HorizontalAlignment="Left" Margin="352,0,0,0" VerticalAlignment="Center" Foreground="White" Width="63"/>
+                <Label x:Name="meltFrontTemperatureLabelFourth" Content="null" HorizontalAlignment="Left" Margin="352,106,0,0" VerticalAlignment="Top" Foreground="White" Width="63"/>
+                <Label x:Name="meltThermalConductivityLabel" Content="null" HorizontalAlignment="Left" Margin="352,132,0,0" VerticalAlignment="Top" Foreground="White" Width="63"/>
+                <Label x:Name="meltHeatTransferLabel" Content="null" HorizontalAlignment="Left" Margin="352,157,0,0" VerticalAlignment="Top" Foreground="White" Height="29" Width="63"/>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="356" LineHeight="25" Foreground="White" Margin="10,0,0,0" Height="168"><Run Text="Температурные единицы:"/><LineBreak/><Run Text="Температура фронта потока расплава Т1-2:"/><LineBreak/><Run Text="Температура фронта потока расплава Т1-3:"/><LineBreak/><Run Text="Температура фронта потока расплава Т3-4:"/><LineBreak/><Run Text="Температура фронта потока расплава Т4-5:"/><LineBreak/><Run Text="Температуропроводность расплава:"/><LineBreak/><Run Text="Теплоотдача расплава:"/></TextBlock>
 
             </Grid>
@@ -112,7 +112,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="VericallyForm" Margin="424,32,39,0" Background="#FF2B2B2B" Height="650" VerticalAlignment="Top">
+        <Grid x:Name="VericallyForm" Margin="424,32,39,0" Background="#FF2B2B2B" Height="650" VerticalAlignment="Top" Visibility="Hidden">
             <Grid Margin="20,74,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="392" Height="215" VerticalAlignment="Top">
                 <Label x:Name="riserSquareLabel" Content="null" HorizontalAlignment="Left" Margin="336,32,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <Label x:Name="riserSizeLabel" Content="null" HorizontalAlignment="Left" Margin="336,57,0,0" VerticalAlignment="Top" Foreground="White"/>
