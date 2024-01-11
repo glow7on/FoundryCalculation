@@ -28,7 +28,7 @@ namespace FoundryCalculation
         /// <summary> Теплопроводность λж, Вт/м·К </summary>
         public double heatOutput; 
 
-        /// <summary> Теплоаккумулирующая способность bж, Вт·с1/2/(м2·К) </summary>
+        /// <summary> Теплоаккумулирующая способность bж, Вт·с1/2/(м2·К) </summary> ///
         public double heatStorageCapacity;
 
         /// <summary> Температуропроводность a(ж), м^2/с </summary>

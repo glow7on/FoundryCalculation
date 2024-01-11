@@ -7,17 +7,26 @@
         mc:Ignorable="d"
         Icon="/Resources/Icon.png"
         Title="Стартовое окно"
-        Height="417" Width="700" Background="#FF1E1E1E">
-    <Grid Background="#FF202020" Margin="0,0,10,-6">
-        <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="68,57,0,0" FontSize="24" Foreground="White" Background="#FF424040" Click="CreateNewForm" Height="267" VerticalAlignment="Top" HorizontalAlignment="Left" Width="197">
+        Height="455" Width="650" Background="#FF1E1E1E">
+    <Grid Background="#FF202020" Margin="0,0,0,-6">
+        <Button x:Name="CreateFileButton" VerticalContentAlignment="Center" Margin="236,120,0,0" FontSize="24" Foreground="White" Background="#FF424040" Click="CreateNewForm" Height="232" VerticalAlignment="Top" HorizontalAlignment="Left" Width="174">
             <Image Source="/Resources/NewFile.png" Height="140" Width="100"/>
         </Button>
-        <Button x:Name="OpenDataButton" Margin="372,84,0,0" Background="#FF424040" Height="72" VerticalAlignment="Top" HorizontalAlignment="Left" Width="258">
-            <Image Source="Resources/LoadFile.png" Height="54" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Stretch="Fill" Margin="0,0,150,0"/>
+        <Button x:Name="OpenDataButton" Margin="307,120,0,0" Background="#FF424040" Height="72" VerticalAlignment="Top" HorizontalAlignment="Left" Width="283" Visibility="Hidden">
+            <Image Source="Resources/LoadFile.png" Height="54" HorizontalAlignment="Left" Width="60" Margin="-120,0,0,0" Stretch="Fill"/>
         </Button>
-        <Button x:Name="AboutButton" Content="О программе" Margin="404,188,0,0" Background="#FF424040" FontSize="20" Foreground="White" FontFamily="Yu Gothic UI Light" Height="59" VerticalAlignment="Top" HorizontalAlignment="Left" Width="194"/>
-        <Label Content="Создать расчёт" Margin="96,272,0,0" FontSize="20" FontFamily="Yu Gothic UI Light" Foreground="White" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="149"/>
-        <Label Content="Считать из файла" Margin="468,102,0,0" FontFamily="Yu Gothic UI Light" FontSize="18" Foreground="White" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150"/>
-
+        <Button x:Name="AboutButton" Content="О программе" Margin="307,206,0,0" Background="#FF424040" FontSize="18" Foreground="White" FontFamily="Yu Gothic UI Light" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="194" Visibility="Hidden"/>
+        <Label Content="Создать расчёт" Margin="0,311,0,0" FontSize="18" FontFamily="Yu Gothic UI Light" Foreground="White" Height="37" VerticalAlignment="Top" HorizontalAlignment="Center" Width="138"/>
+        <Label Content="База данных сплавов" Margin="402,140,0,0" FontFamily="Yu Gothic UI Light" FontSize="18" Foreground="White" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="188" Visibility="Hidden"/>
+        <Grid Background="#FF262626" Height="62" VerticalAlignment="Top">
+            <Label Content="Foundry Calculation" Foreground="White" Margin="20,10,366,0" VerticalAlignment="Top" FontSize="22"/>
+            <Label x:Name="AppVersion" Content="" Foreground="White" Margin="566,21,10,0" VerticalAlignment="Top" FontSize="16"/>
+        </Grid>
+        <Label Content="Начало работы" HorizontalAlignment="Left" Margin="236,79,0,0" VerticalAlignment="Top" Foreground="White" FontSize="17" Width="162"/>
+        <Label Content="Дополнительно" HorizontalAlignment="Left" Margin="307,79,0,0" VerticalAlignment="Top" Foreground="White" FontSize="17" Width="161" Visibility="Hidden"/>
+        <TextBlock Margin="0,373,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Center" Width="178" FontSize="13">
+            <Hyperlink NavigateUri="FormCalculation.xaml" RequestNavigate="CreateEmptyForm">Продолжить без шаблона -></Hyperlink>
+        </TextBlock>
     </Grid>
+
 </Window>

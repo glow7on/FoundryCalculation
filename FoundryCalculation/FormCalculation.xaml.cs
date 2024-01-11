@@ -89,9 +89,9 @@ namespace FoundryCalculation
         double riserSize; //Размер стояка
         double pitDiameter; //Диаметр колодца
 
-        public FormCalculation()
+        public FormCalculation(bool pattern)
         {
-
+            InitializeComponent();            
 //            var sections = new List<Section>
 //              {
 //                  new Section { Name = "1-2", FlowRate = fillingRateLimit, SpeedInArrowLabel = speedInArrowLabelSecond, FlowRateLabel = FlowRateLabelSecond, MeltFrontTemperatureLabel = meltFrontTemperatureLabelFirst },
@@ -120,7 +120,6 @@ namespace FoundryCalculation
 //                }
 //            }
 
-            InitializeComponent();
             //Табличные значения критерия шлакообразования для различных конфигураций по типу литниковой системы: простой, средней и сложной соответственно
             int[] verticallySlottedArray = new int[] { 150000, 18500, 6500 };
             int[] siphonArray = new int[] { 75000, 9000, 3100 };
@@ -220,6 +219,22 @@ namespace FoundryCalculation
             CoverageSelection.ItemsSource = coverages;
             meltSupplySchemesSelection.ItemsSource = meltSupplySchemes;
             ComplexitySelection.ItemsSource = ComplexityArray;
+
+            if (pattern == true)
+            {
+                formHeightBox.Text = "300";
+                formWidthBox.Text = "250";
+                formThickBox.Text = "5";
+                formLengthBox.Text = "400";
+                meltPressureBox.Text = "400";
+                AlloySelection.SelectedIndex = 7;
+                fillingTemperatureBox.IsEnabled = true;
+                fillingTemperatureBox.Text = "1053";
+                MixtureSelection.SelectedIndex = 0;
+                CoverageSelection.SelectedIndex = 1;
+                meltSupplySchemesSelection.SelectedIndex = 4;
+                ComplexitySelection.SelectedIndex = 0;
+            }
         }
 
         void StartCalculation(object sender, RoutedEventArgs e)
@@ -506,32 +521,91 @@ namespace FoundryCalculation
         }
         //Расчет Вертикально-щелевой /
 
-        void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
-        {
-            MeltSupplyScheme selectedItem = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
-            if (selectedItem.type == "Вертикально-щелевая")
-            {
-                StdForm.Visibility = Visibility.Hidden;
-                VericallyForm.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                StdForm.Visibility = Visibility.Visible;
-                VericallyForm.Visibility = Visibility.Hidden;
-            }
-            SupplySchemeImage.Source = selectedItem.bitmapImage;
-            SelectedSchemeLabel.Content = "Выбранная схема подвода: " + selectedItem.name;
-        }
-
         private void AlloySelectionChange(object sender, SelectionChangedEventArgs e)
         {
             fillingTemperatureBox.IsEnabled = true;
             try
             {
-                if (AluminiumRadioBtn.IsChecked == true) { fillingTemperatureLabel.Content = "Рек.: " + (aluminiumAlloys[AlloySelection.SelectedIndex].liquidusTemperature + 50); }
-                else { fillingTemperatureLabel.Content = "Рек.: " + (magniumAlloys[AlloySelection.SelectedIndex].liquidusTemperature + 50); }
+                if (AluminiumRadioBtn.IsChecked == true) 
+                { 
+                    fillingTemperatureLabel.Content = "Рек.: " + (aluminiumAlloys[AlloySelection.SelectedIndex].liquidusTemperature + 50);
+                    currentAlloys = aluminiumAlloys[AlloySelection.SelectedIndex];
+                }
+                else 
+                { 
+                    fillingTemperatureLabel.Content = "Рек.: " + (magniumAlloys[AlloySelection.SelectedIndex].liquidusTemperature + 50);
+                    currentAlloys = magniumAlloys[AlloySelection.SelectedIndex];
+                }
             }
             catch{ }
+
+            alloyNameLabel.Content = currentAlloys.name;
+            liquidusTemperatureLabel.Content = currentAlloys.liquidusTemperature.ToString();
+            solidusTemperatureLabel.Content = currentAlloys.solidusTemperature.ToString();
+            alloyHeatCapacityLabel.Content = currentAlloys.heatCapacity.ToString();
+            liquidMeltDensityLabel.Content = currentAlloys.liquidMeltDensity.ToString();
+            heatOutputLabel.Content = currentAlloys.heatOutput.ToString();
+            alloyHeatStorageCapacityLabel.Content = currentAlloys.heatStorageCapacity.ToString();
+            alloyThermalConductivityLabel.Content = currentAlloys.thermalConductivity.ToString();
+            kineticViscosityLabel.Content = currentAlloys.kineticViscosity.ToString();
+            surfaceTensionLabel.Content = currentAlloys.surfaceTension.ToString();
+            flowStopTemperatureLabel.Content = currentAlloys.flowStopTemperature.ToString();
+        }
+
+        private void MixtureSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentMixture = mixtures[MixtureSelection.SelectedIndex];            
+            initialTemperatureLabel.Content = currentMixture.initialTemperature.ToString();
+            mixtureThermalConductivityLabel.Content = currentMixture.thermalConductivity.ToString();
+            mixtureHeatCapacityLabel.Content = currentMixture.heatCapacity.ToString();
+            dencityLabel.Content = currentMixture.dencity.ToString();
+            mixtureHeatStorageCapacityLabel.Content = currentMixture.heatStorageCapacity.ToString();
+        }
+        private void CoverageSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CoverageSelection.SelectedIndex != -1)
+            {
+                currentCoverage = coverages[CoverageSelection.SelectedIndex];
+                coverageNameLabel.Content = currentCoverage.name;
+                thermalConductivityLabel.Content = currentCoverage.thermalConductivity;
+            }
+            else
+            {
+                coverageNameLabel.Content = "null";
+                thermalConductivityLabel.Content = "null";
+            }
+            
+        }
+        void MeltSupplySchemeChange(object sender, SelectionChangedEventArgs e)
+        {
+            currentMeltSupplyScheme = meltSupplySchemes[meltSupplySchemesSelection.SelectedIndex];
+            if (currentMeltSupplyScheme.type == "Вертикально-щелевая")
+            {
+                VericallyForm.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                VericallyForm.Visibility = Visibility.Hidden;
+            }
+            SupplySchemeImage.Source = currentMeltSupplyScheme.bitmapImage;
+            SelectedSchemeLabel.Content = "Выбранная схема подвода: " + currentMeltSupplyScheme.name;
+            meltSupplySchemeTypeLabel.Content = currentMeltSupplyScheme.type;
+            PathLengthLabel.Content = currentMeltSupplyScheme.GetPathLength(pathLength);
+            MeltPressureLabel.Content = currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure);
+        }
+        private void DeleteCoverageSelection(object sender, RoutedEventArgs e)
+        {
+            CoverageSelection.SelectedIndex = -1;
+        }
+
+        private void ShowCalculatedValues(object sender, RoutedEventArgs e)
+        {
+            initialValues.Visibility = Visibility.Hidden;
+        }
+
+        private void ShowInitialValues(object sender, RoutedEventArgs e)
+        {
+            initialValues.Visibility = Visibility.Visible;
         }
     }
 }
