@@ -53,19 +53,19 @@
 
         </Grid>
 
-        <Grid Margin="38,368,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="373" Height="202" VerticalAlignment="Top">
+        <Grid Margin="38,368,0,0" Background="#FF2B2B2B" HorizontalAlignment="Left" Width="373" Height="207" VerticalAlignment="Top">
             <Label x:Name="SelectedSchemeLabel" Content="Выбранная схема подвода: пусто" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Width="338" Foreground="White" FontSize="10"/>
         </Grid>
 
         <Grid x:Name="StdForm" Margin="460,70,0,0" Background="#FF2B2B2B" Height="590" VerticalAlignment="Top" HorizontalAlignment="Left" Width="882">
-            <Grid Margin="458,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="388" Height="228" VerticalAlignment="Top">
-                <Label x:Name="squareInArrowLabel" Content="null" HorizontalAlignment="Left" Margin="333,38,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
-                <Label x:Name="squareFirstToSecondLabel" Content="null" HorizontalAlignment="Left" Margin="333,62,0,0" VerticalAlignment="Top" Foreground="White" Width="37"/>
-                <Label x:Name="reducedCastingSizeLabel" Content="null" HorizontalAlignment="Left" Margin="332,88,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
-                <Label x:Name="meltPressureLabelFirst" Content="null" HorizontalAlignment="Left" Margin="332,112,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
-                <Label x:Name="meltPressureLabelSecond" Content="null" HorizontalAlignment="Left" Margin="331,137,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
-                <Label x:Name="meltPressureLabelThird" Content="null" HorizontalAlignment="Left" Margin="331,163,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
-                <Label x:Name="meltPressureLabelFourth" Content="null" HorizontalAlignment="Left" Margin="331,187,0,0" VerticalAlignment="Top" Foreground="White" Width="38"/>
+            <Grid Margin="458,29,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="402" Height="228" VerticalAlignment="Top">
+                <Label x:Name="squareInArrowLabel" Content="null" HorizontalAlignment="Left" Margin="333,38,0,0" VerticalAlignment="Top" Foreground="White" Width="59"/>
+                <Label x:Name="squareFirstToSecondLabel" Content="null" HorizontalAlignment="Left" Margin="333,62,0,0" VerticalAlignment="Top" Foreground="White" Width="59"/>
+                <Label x:Name="reducedCastingSizeLabel" Content="null" HorizontalAlignment="Left" Margin="332,88,0,0" VerticalAlignment="Top" Foreground="White" Width="60"/>
+                <Label x:Name="meltPressureLabelFirst" Content="null" HorizontalAlignment="Left" Margin="332,112,0,0" VerticalAlignment="Top" Foreground="White" Width="60"/>
+                <Label x:Name="meltPressureLabelSecond" Content="null" HorizontalAlignment="Left" Margin="331,137,0,0" VerticalAlignment="Top" Foreground="White" Width="61"/>
+                <Label x:Name="meltPressureLabelThird" Content="null" HorizontalAlignment="Left" Margin="331,163,0,0" VerticalAlignment="Top" Foreground="White" Width="61"/>
+                <Label x:Name="meltPressureLabelFourth" Content="null" HorizontalAlignment="Left" Margin="331,187,0,0" VerticalAlignment="Top" Foreground="White" Width="61"/>
                 <TextBlock HorizontalAlignment="Left" Margin="10,0,0,12" TextWrapping="Wrap" VerticalAlignment="Bottom" LineHeight="25" Foreground="White" Width="295"><Run Text="Размерные параметры:"/><LineBreak/> <Run Text="Площадь поперечного сечения в узком месте:"/><LineBreak/><Run Text="Площадь поперечного сечения на участке (1-2)"/><LineBreak/><Run>Приведенный размер отливки:</Run><LineBreak/><Run Text="Напор расплава на участке 1-2:"/><LineBreak/><Run Text="Напор расплава на участке 1-3:"/><LineBreak/><Run Text="Напор расплава на участке 3-4:"/><LineBreak/><Run Text="Напор расплава на участке 4-5:"/></TextBlock>
 
 
@@ -146,7 +146,7 @@
             <Label x:Name="nusseltCriterionLabel" Content="null" HorizontalAlignment="Left" Margin="145,28,0,0" Foreground="White" Height="26" VerticalAlignment="Top"/>
         </Grid>
 
-        <Grid x:Name="initialValues" Margin="460,32,0,0" Background="#FF2B2B2B" Height="628" VerticalAlignment="Top" HorizontalAlignment="Left" Width="882">
+        <Grid x:Name="initialValues" Margin="460,32,0,0" Background="#FF2B2B2B" Height="628" VerticalAlignment="Top" HorizontalAlignment="Left" Width="882" Visibility="Hidden">
             <Grid Margin="11,59,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="425" Height="309" VerticalAlignment="Top">
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="337" LineHeight="25" Foreground="White" Margin="10,0,0,0" Height="296"><Run Text="Параметры сплава:"/><LineBreak/><Run Text="Наименование:"/><LineBreak/><Run Text="Температура ликвидус Тл, К:"/><LineBreak/><Run Text="Температура солидус Тс, К:"/><LineBreak/><Run Text="Теплоемкость Сж, Дж/Кг*К:"/><LineBreak/><Run Text="Плотность жидкого расплава p(ж), Кг/м^3:"/><LineBreak/><Run Text="Теплопроводность λж, Вт/м·К:"/><LineBreak/><Run Text="Теплоаккумулирующая способность bж, Вт·с1/2/(м2·К):"/><LineBreak/><Run Text="Температуропроводность a(ж), м^2/с:"/><LineBreak/><Run Text="Кинетическая вязкость v, 10^-7 * м^2/с:"/><LineBreak/><Run Text="Поверхностное натяжение σ, H/м:"/><LineBreak/><Run Text="Температура остановки потока Т0, К:"/></TextBlock>
                 <Label x:Name="alloyNameLabel" Content="Null" HorizontalAlignment="Left" Margin="348,28,0,0" VerticalAlignment="Top" Width="72" Foreground="White"/>
@@ -178,16 +178,16 @@
             </Grid>
 
             <Grid Margin="447,170,0,0" Background="#FF373737" HorizontalAlignment="Left" Width="425" Height="125" VerticalAlignment="Top">
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="337" LineHeight="25" Foreground="White" Margin="10,18,0,0" Height="98"><Run Text="Параметры схемы подвода:"/><LineBreak/><Run Text="Тип литниковой системы:"/><LineBreak/><Run Text="Длина пути для выбранной схемы:"/><LineBreak/><Run Text="Напор расплава H для выбранной схемы:"/></TextBlock>
-                <Label x:Name="meltSupplySchemeTypeLabel" Content="Null" HorizontalAlignment="Left" Margin="339,40,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                <Label x:Name="PathLengthLabel" Content="Null" HorizontalAlignment="Left" Margin="340,66,0,0" VerticalAlignment="Top" Width="72" Foreground="White"/>
-                <Label x:Name="MeltPressureLabel" Content="Null" HorizontalAlignment="Left" Margin="340,92,0,0" VerticalAlignment="Top" Width="72" Foreground="White"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="337" LineHeight="25" Foreground="White" Margin="10,18,0,0" Height="98"><Run Text="Параметры схемы подвода:"/><LineBreak/><Run Text="Тип литниковой системы:"/><LineBreak/><Run Text="Длина пути для выбранной схемы, м :"/><LineBreak/><Run Text="Напор расплава H для выбранной схемы, м :"/></TextBlock>
+                <Label x:Name="meltSupplySchemeTypeLabel" Content="Null" HorizontalAlignment="Left" Margin="252,40,0,0" VerticalAlignment="Top" Width="169" Foreground="White"/>
+                <Label x:Name="PathLengthLabel" Content="Null" HorizontalAlignment="Left" Margin="301,66,0,0" VerticalAlignment="Top" Width="72" Foreground="White"/>
+                <Label x:Name="MeltPressureLabel" Content="Null" HorizontalAlignment="Left" Margin="301,92,0,0" VerticalAlignment="Top" Width="72" Foreground="White"/>
             </Grid>
 
         </Grid>
 
         <Button Content="Вычислить параметры формы" HorizontalAlignment="Left" Margin="38,584,0,0" VerticalAlignment="Top" Height="46" Width="373" Background="#FF2B2B2B" Foreground="White" Click="StartCalculation"/>
-        <Image x:Name="SupplySchemeImage" HorizontalAlignment="Left" Height="165" Margin="49,396,0,0" VerticalAlignment="Top" Width="349"/>
+        <Image x:Name="SupplySchemeImage" HorizontalAlignment="Left" Height="165" Margin="49,405,0,0" VerticalAlignment="Top" Width="349"/>
         <Button Content="Вычисленные значения" HorizontalAlignment="Left" Margin="460,32,0,0" VerticalAlignment="Top" Width="444" Height="38" Background="#FF2B2B2B" Foreground="White" Click="ShowCalculatedValues"/>
         <Button Content="Начальные значения" HorizontalAlignment="Left" Margin="904,32,0,0" VerticalAlignment="Top" Width="438" Height="38" Background="#FF2B2B2B" Foreground="White" Click="ShowInitialValues"/>
     </Grid>

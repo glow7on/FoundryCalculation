@@ -107,15 +107,15 @@
     <Resource Include="Resources\NewFile.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\Side.png" />
     <Resource Include="Resources\SideTwo.png" />
     <Resource Include="Resources\Siphon.png" />
     <Resource Include="Resources\SiphonTwo.png" />
     <Resource Include="Resources\Tiered.png" />
     <Resource Include="Resources\VerticallySlotted.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

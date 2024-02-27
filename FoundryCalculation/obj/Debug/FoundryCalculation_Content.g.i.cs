@@ -8,6 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/foundrycalculation.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/side.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/sidetwo.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/siphon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/siphontwo.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/tiered.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/verticallyslotted.png")]
 
 

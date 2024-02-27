@@ -370,17 +370,17 @@ namespace FoundryCalculation
         }
         void MeltPressureFirstToSecondCalculation() //Определение напора расплава на участке 1-2
         {
-            meltPressure1_2 = currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure);
+            meltPressure1_2 = Math.Round(currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure), 5);
             meltPressureLabelFirst.Content = meltPressure1_2;
         }
         void SpeedInArrowCalculation(ref double speedInArrow, double meltPressure, Label speedInArrowLabel) //Скорость течения расплава в узком месте, м/с (1.1.5) (ω уз.)
         {
-            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2.0 * G * meltPressure), 3);
+            speedInArrow = Math.Round(currentMeltSupplyScheme.flowCoefficient * Math.Sqrt(2.0 * G * meltPressure), 4);
             speedInArrowLabel.Content = speedInArrow;
         }
         void SquareInArrowCalculation() //Площадь поперечного сечения узкого места литниковой системы Fуз(1.1.4)
         {
-            squareInArrow = Math.Round((squareSection * fillingRateLimit) / speedInArrow1_2, 5);
+            squareInArrow = Math.Round((squareSection * fillingRateLimit) / speedInArrow1_2, 7);
             squareInArrowLabel.Content = squareInArrow;
         }
         void MeltThermalConductivityCalculation() //Температуропроводность расплава аж (1.1.11)
@@ -426,7 +426,7 @@ namespace FoundryCalculation
 
         void MeltPressureFirstToThirdCalculation() //Напор расплава на участке 1-3
         {
-            meltPressure1_3 = meltPressure1_2 - (0.5 * 0.5 * formHeight);
+            meltPressure1_3 = Math.Round(meltPressure1_2 - (0.5 * 0.5 * formHeight), 5);
             meltPressureLabelSecond.Content = meltPressure1_3;
         }
         void FlowRateCalculation(ref double meltFlowRate, double meltPressure, Label FlowRateLabel) //скорость расплава при движении на участке ДОБАВИТЬ ВЫВОД
@@ -436,12 +436,12 @@ namespace FoundryCalculation
         }
         void MeltPressureThirdToFourthCalculation() //Напор расплава на участке 3-4
         {
-            meltPressure3_4 = meltPressure1_2 - (0.5 * formHeight) - (0.25 * formHeight);
+            meltPressure3_4 = Math.Round(meltPressure1_2 - (0.5 * formHeight) - (0.25 * formHeight), 5);
             meltPressureLabelThird.Content = meltPressure3_4;
         }
         void MeltPressureFourthToFifthCalculation() //Напор расплава на участке 4-5
         {
-            meltPressure4_5 = meltPressure1_2 - formHeight;
+            meltPressure4_5 = Math.Round(meltPressure1_2 - formHeight, 5);
             meltPressureLabelFourth.Content = meltPressure4_5;
         }
 
@@ -590,7 +590,7 @@ namespace FoundryCalculation
             SupplySchemeImage.Source = currentMeltSupplyScheme.bitmapImage;
             SelectedSchemeLabel.Content = "Выбранная схема подвода: " + currentMeltSupplyScheme.name;
             meltSupplySchemeTypeLabel.Content = currentMeltSupplyScheme.type;
-            PathLengthLabel.Content = currentMeltSupplyScheme.GetPathLength(pathLength);
+            PathLengthLabel.Content = currentMeltSupplyScheme.GetPathLength(formLength);
             MeltPressureLabel.Content = currentMeltSupplyScheme.GetMeltPressure(formHeight, meltPressure);
         }
         private void DeleteCoverageSelection(object sender, RoutedEventArgs e)
